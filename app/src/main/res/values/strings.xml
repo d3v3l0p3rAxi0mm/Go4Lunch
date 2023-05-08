@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Go4Lunch</string>
+    <string name="baseLine">Find a nice restaurant and invite your co-workers for lunch!</string>
+    <string name="signInWithGoogle">Sign-in/up with Google</string>
+    <string name="signInWithEmail">Sign-in/up with email</string>
+    <string name="opacityimagefilter">OpacityImageFilter</string>
+    <string name="home_screen">Home Screen</string>
+    <string name="go4lunch_logo">Go4Lunch Logo</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="description">description</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
