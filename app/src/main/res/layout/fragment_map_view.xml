@@ -12,24 +12,28 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:text="Map View"
+            android:textSize="56sp"
+            android:textColor="@color/black"
+            android:gravity="bottom|center"/>
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:padding="64dp"
             android:src="@drawable/baseline_map_24"
+            android:backgroundTint="@color/Primary"
             app:tint="@color/Primary" />
-
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Map View"
-            android:textSize="56sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:gravity="top|center"/>
+            android:layout_weight="6"
+            android:text="" />
 
     </LinearLayout>
 

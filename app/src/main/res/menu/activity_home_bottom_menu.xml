@@ -5,15 +5,15 @@
     tools:showIn="navigation_view">
 
     <item
-        android:id="@+id/m1"
+        android:id="@+id/mapViewButton"
         android:icon="@drawable/baseline_map_24"
         android:title="Map View" />
     <item
-        android:id="@+id/m2"
+        android:id="@+id/listViewButton"
         android:icon="@drawable/baseline_view_list_24"
         android:title="List View" />
     <item
-        android:id="@+id/m3"
+        android:id="@+id/workmatesButton"
         android:icon="@drawable/baseline_people_24"
         android:title="Workmates" />
 
