@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding b;
     private static final int RC_SIGN_IN = 123;
-    private UserManager userManager = UserManager.getInstance();
+    private final UserManager userManager = UserManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                         .setTheme(R.style.Theme_Go4Lunch)
                         .setAvailableProviders(providers)
                         .setIsSmartLockEnabled(false, true)
-                        .setLogo(R.drawable.baseline_people_24)
+                        .setLogo(R.drawable.baseline_fingerprint_24)
                         .build(),
                 RC_SIGN_IN);
     }
