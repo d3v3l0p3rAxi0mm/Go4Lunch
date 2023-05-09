@@ -8,8 +8,6 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public final class UserRepository {
 
@@ -38,25 +36,6 @@ public final class UserRepository {
 
     public Task<Void> signOut(Context context){
         return AuthUI.getInstance().signOut(context);
-    }
-
-    public Task<Void> deleteUser(Context context){
-        return AuthUI.getInstance().delete(context);
-    }
-
-
-
-    // Delete the User from Firestore
-    public void deleteUserFromFirestore() {
-        String uid = this.getCurrentUser().getUid();
-        if(uid != null){
-            this.getUsersCollection().document(uid).delete();
-        }
-    }
-
-    // Get the Collection Reference
-    private CollectionReference getUsersCollection(){
-        return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
 
 }

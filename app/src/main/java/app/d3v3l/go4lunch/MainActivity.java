@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import app.d3v3l.go4lunch.databinding.ActivityMainBinding;
 import app.d3v3l.go4lunch.manager.UserManager;
@@ -31,10 +32,11 @@ public class MainActivity extends AppCompatActivity {
         b = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
         setupListeners();
-
     }
 
+
     private void setupListeners(){
+        // Email Authentification
         b.ActivityMainButtonSignInWithEmmail.setOnClickListener(view -> {
             if(userManager.isCurrentUserLogged()){
                 startHomeActivity();
@@ -42,14 +44,12 @@ public class MainActivity extends AppCompatActivity {
                 startSignInActivity("email");
             }
         });
-        b.ActivityMainButtonSignInWithGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(userManager.isCurrentUserLogged()){
-                    startHomeActivity();
-                }else{
-                    startSignInActivity("google");
-                }
+        // Google Authentification
+        b.ActivityMainButtonSignInWithGoogle.setOnClickListener(v -> {
+            if(userManager.isCurrentUserLogged()){
+                startHomeActivity();
+            }else{
+                startSignInActivity("google");
             }
         });
 
@@ -57,17 +57,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void startSignInActivity(String authType){
 
-        switch (authType) {
-            case "email" :
+        List<AuthUI.IdpConfig> providers;
+        if (Objects.equals(authType, "email")) {
+            providers = Collections.singletonList(new AuthUI.IdpConfig.EmailBuilder().build());
+        } else if (Objects.equals(authType, "google")) {
+            providers = Collections.singletonList(new AuthUI.IdpConfig.GoogleBuilder().build());
+        } else {
+            providers = null;
         }
-
-        // Choose authentication providers
-        List<AuthUI.IdpConfig> providers =
-                Arrays.asList(
-                        new AuthUI.IdpConfig.GoogleBuilder().build(),
-                        new AuthUI.IdpConfig.EmailBuilder().build()
-                );
-                Collections.singletonList(new AuthUI.IdpConfig.EmailBuilder().build());
 
         startActivityForResult(
                 AuthUI.getInstance()

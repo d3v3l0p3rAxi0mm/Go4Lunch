@@ -10,7 +10,7 @@ import app.d3v3l.go4lunch.repository.UserRepository;
 public class UserManager {
 
     private static volatile UserManager instance;
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     private UserManager() {
         userRepository = UserRepository.getInstance();
@@ -39,14 +39,6 @@ public class UserManager {
 
     public Task<Void> signOut(Context context){
         return userRepository.signOut(context);
-    }
-
-    public Task<Void> deleteUser(Context context){
-        // Delete the user account from the Auth
-        return userRepository.deleteUser(context).addOnCompleteListener(task -> {
-            // Once done, delete the user datas from Firestore
-            userRepository.deleteUserFromFirestore();
-        });
     }
 
 }
