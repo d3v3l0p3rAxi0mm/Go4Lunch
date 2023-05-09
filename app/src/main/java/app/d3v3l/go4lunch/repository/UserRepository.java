@@ -44,6 +44,8 @@ public final class UserRepository {
         return AuthUI.getInstance().delete(context);
     }
 
+
+
     // Delete the User from Firestore
     public void deleteUserFromFirestore() {
         String uid = this.getCurrentUser().getUid();
@@ -51,11 +53,6 @@ public final class UserRepository {
             this.getUsersCollection().document(uid).delete();
         }
     }
-
-
-
-
-
 
     // Get the Collection Reference
     private CollectionReference getUsersCollection(){

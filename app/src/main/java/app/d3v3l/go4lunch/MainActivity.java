@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,16 +39,34 @@ public class MainActivity extends AppCompatActivity {
             if(userManager.isCurrentUserLogged()){
                 startHomeActivity();
             }else{
-                startSignInActivity();
+                startSignInActivity("email");
+            }
+        });
+        b.ActivityMainButtonSignInWithGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(userManager.isCurrentUserLogged()){
+                    startHomeActivity();
+                }else{
+                    startSignInActivity("google");
+                }
             }
         });
 
     }
 
-    private void startSignInActivity(){
+    private void startSignInActivity(String authType){
+
+        switch (authType) {
+            case "email" :
+        }
 
         // Choose authentication providers
         List<AuthUI.IdpConfig> providers =
+                Arrays.asList(
+                        new AuthUI.IdpConfig.GoogleBuilder().build(),
+                        new AuthUI.IdpConfig.EmailBuilder().build()
+                );
                 Collections.singletonList(new AuthUI.IdpConfig.EmailBuilder().build());
 
         startActivityForResult(
