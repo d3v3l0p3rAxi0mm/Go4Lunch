@@ -43,7 +43,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         b = ActivityHomeBinding.inflate(getLayoutInflater());
-        //bNav = ActivityHomeNavHeaderBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
 
         userManager = UserManager.getInstance();
@@ -68,6 +67,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         b.activityHomeNavView.setNavigationItemSelectedListener(item -> {
             int idRessource = item.getItemId();
+            // Case when user click on Logout Button
             if (idRessource == R.id.activity_home_drawer_logout) {
                 userManager.signOut(this).addOnSuccessListener(aVoid -> { finish(); });
             }
@@ -76,16 +76,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateUIWithUserData();
-    }
 
     private void updateUIWithUserData(){
         if(userManager.isCurrentUserLogged()){
             FirebaseUser user = userManager.getCurrentUser();
-            setTextUserData(user);
+            setInfoUserData(user);
         }
     }
 
@@ -104,12 +99,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void configureNavigationView(){
         b.activityHomeNavView.setNavigationItemSelectedListener(this);
     }
-/*
-    navHeaderView= navigationView.inflateHeaderView(R.layout.nav_header_main);
-    tvHeaderName= (TextView) navHeaderView.findViewById(R.id.tvHeaderName);
-    tvHeaderName.setText("Saly");
-
- */
 
     private void loadMapViewFragment() {
         FragmentManager manager = ((AppCompatActivity) b.activityHomeFrameLayout.getContext()).getSupportFragmentManager();
@@ -134,18 +123,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
-    private void setTextUserData(FirebaseUser user){
 
+    private void setInfoUserData(FirebaseUser user){
         if (userManager.getCurrentUser() != null) {
-
-            //b.activityHomeDrawerLayout.setDrawerTitle(0,user.getDisplayName());
-
             String name = TextUtils.isEmpty(user.getDisplayName()) ? getString(R.string.info_no_username_found) : user.getDisplayName();
-            //bNav.menuDrawerName.setText(name);
-            TextView textView = b.activityHomeNavView.getHeaderView(0).findViewById(R.id.menuDrawerName);
-            textView.setText(name);
+            TextView nameView = b.activityHomeNavView.getHeaderView(0).findViewById(R.id.menuDrawerName);
+            nameView.setText(name);
 
+            String email = TextUtils.isEmpty(user.getEmail()) ? getString(R.string.info_no_email_found) : user.getEmail();
+            TextView emailView = b.activityHomeNavView.getHeaderView(0).findViewById(R.id.menuDrawerEmail);
+            emailView.setText(email);
 
+            ImageView pictureView = b.activityHomeNavView.getHeaderView(0).findViewById(R.id.menuDrawerAvatar);
+            if(user.getPhotoUrl() != null){
+                Glide.with(this)
+                        .load(user.getPhotoUrl())
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(pictureView);
+            }
         }
 
     }
