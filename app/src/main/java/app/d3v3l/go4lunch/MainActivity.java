@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             // SUCCESS
             if (resultCode == RESULT_OK) {
-                //userManager.createUser();
+                userManager.createUser();
                 startHomeActivity();
                 //showSnackBar(getString(R.string.connection_succeed));
             } else {
