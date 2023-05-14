@@ -1,4 +1,4 @@
-package app.d3v3l.go4lunch;
+package app.d3v3l.go4lunch.ui;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import app.d3v3l.go4lunch.R;
 
 /**
  * A simple {@link Fragment} subclass.

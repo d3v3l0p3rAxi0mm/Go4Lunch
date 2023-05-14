@@ -1,22 +1,21 @@
-package app.d3v3l.go4lunch;
+package app.d3v3l.go4lunch.ui;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import app.d3v3l.go4lunch.R;
 import app.d3v3l.go4lunch.databinding.ActivityMainBinding;
 import app.d3v3l.go4lunch.manager.UserManager;
 
