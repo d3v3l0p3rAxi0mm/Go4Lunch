@@ -10,11 +10,11 @@ Find a nice restaurant and invite your co-workers for lunch !
 
 ## General Info
 
-requirement :
+__requirement__ :
 
 Go4Lunch is an Android application that works with Android 5.0 and more.
 
-What's Go4Lunch ?
+__What's Go4Lunch__ ?
 
 Go4Lunch could be used by company's co-workers in order to decide together where to lunch.
 
@@ -27,7 +27,6 @@ __Gson__
 ```python
 implementation 'com.google.code.gson:gson:2.9.0'
 ```
-
 __RetroFit__
 ```python
 implementation 'com.squareup.retrofit2:retrofit:2.9.0'
