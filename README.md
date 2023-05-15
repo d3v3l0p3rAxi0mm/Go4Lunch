@@ -19,6 +19,11 @@ Go4Lunch ...
 
 ## Libraries
 
+Gson
+```python
+implementation 'com.google.code.gson:gson:2.9.0'
+```
+
 RetroFit
 ```python
 implementation 'com.squareup.retrofit2:retrofit:2.9.0'
