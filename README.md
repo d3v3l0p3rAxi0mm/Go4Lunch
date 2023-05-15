@@ -1,7 +1,5 @@
 # Go4Lunch
 
-...
-
 Find a nice restaurant and invite your co-workers for lunch !
 
 ## Table of Contents
@@ -12,7 +10,11 @@ Find a nice restaurant and invite your co-workers for lunch !
 
 ## General Info
 
-Go4Lunch ...
+requirement :
+Go4Lunch is an Android application that works with Android 5.0 and more.
+
+What's Go4Lunch ?
+Go4Lunch could be used by company's co-workers in order to decide together where to lunch.
 
 ## Screenshots
 ![Login Page](/app/src/main/res/drawable/readme1.png)
