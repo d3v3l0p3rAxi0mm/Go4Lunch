@@ -24,12 +24,14 @@ Go4Lunch could be used by company's co-workers in order to decide together where
 ## Libraries
 
 __Gson__
-add this line in module build.gradle to use this library. [Gson](https://github.com/google/gson) is a Java library that can be used to convert Java Objects into their JSON representation. 
+
+Add this line in module build.gradle to use this library. [Gson](https://github.com/google/gson) is a Java library that can be used to convert Java Objects into their JSON representation. 
 ```python
 implementation 'com.google.code.gson:gson:2.9.0'
 ```
 __RetroFit__
-add this line in module build.gradle to use this library. [Retrofit](https://square.github.io/retrofit) is a type-safe HTTP client for Android and Java.
+
+Add this line in module build.gradle to use this library. [Retrofit](https://square.github.io/retrofit) is a type-safe HTTP client for Android and Java.
 ```python
 implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
