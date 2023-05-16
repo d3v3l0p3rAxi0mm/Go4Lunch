@@ -1,21 +1,18 @@
-
-package app.d3v3l.go4lunch.model;
+package app.d3v3l.go4lunch.model.placeDetails;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Place {
+
+public class PlaceDetailsContainer {
 
     @SerializedName("html_attributions")
     @Expose
     private List<Object> htmlAttributions;
-    @SerializedName("next_page_token")
+    @SerializedName("result")
     @Expose
-    private String nextPageToken;
-    @SerializedName("results")
-    @Expose
-    private List<Result> results;
+    private PlaceWithDetails placeWithDetails;
     @SerializedName("status")
     @Expose
     private String status;
@@ -28,20 +25,12 @@ public class Place {
         this.htmlAttributions = htmlAttributions;
     }
 
-    public String getNextPageToken() {
-        return nextPageToken;
+    public PlaceWithDetails getResult() {
+        return placeWithDetails;
     }
 
-    public void setNextPageToken(String nextPageToken) {
-        this.nextPageToken = nextPageToken;
-    }
-
-    public List<Result> getResults() {
-        return results;
-    }
-
-    public void setResults(List<Result> results) {
-        this.results = results;
+    public void setResult(PlaceWithDetails placeWithDetails) {
+        this.placeWithDetails = placeWithDetails;
     }
 
     public String getStatus() {

@@ -7,52 +7,62 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import app.d3v3l.go4lunch.BuildConfig;
 import app.d3v3l.go4lunch.Utils.PlaceCalls;
 import app.d3v3l.go4lunch.databinding.ActivityRestaurantCallsBinding;
-import app.d3v3l.go4lunch.model.Location;
-import app.d3v3l.go4lunch.model.Place;
-import app.d3v3l.go4lunch.model.Result;
+import app.d3v3l.go4lunch.model.placeDetails.PlaceDetailsContainer;
+import app.d3v3l.go4lunch.model.placeDetails.PlaceWithDetails;
+import app.d3v3l.go4lunch.model.placesByTextSearch.PlacesByTextSearchContainer;
+import app.d3v3l.go4lunch.model.placesByTextSearch.Place;
 
-public class RestaurantCalls extends AppCompatActivity implements PlaceCalls.Callbacks {
+public class RestaurantCalls extends AppCompatActivity implements PlaceCalls.CallbacksAllPlaces, PlaceCalls.CallbacksPlaceDetails {
 
     private ActivityRestaurantCallsBinding b;
+    private StringBuilder stringBuilder = new StringBuilder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         b = ActivityRestaurantCallsBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
-        executeHttpRequestWithRetrofit();
+        HttpRequestAllPlaces();
     }
 
-    // Execute HTTP request and update UI
-    private void executeHttpRequestWithRetrofit(){
+    // Execute HTTP request
+    private void HttpRequestAllPlaces(){
         updateUIWhenStartingHTTPRequest();
-        String myLocation = "45,3";
-        PlaceCalls.fetchRestaurants(this, "restaurants", myLocation, 3000);
+        String myLocation = "46.660079946981696,2.297249870034013";
+        PlaceCalls.fetchRestaurants(this, "restaurants", myLocation);
+    }
+
+    // Execute HTTP request
+    private void HttpRequestDetailsPlace(String placeId){
+        PlaceCalls.fetchDetailsRestaurant(this, placeId);
     }
 
     @Override
-    public void onResponse(@Nullable Place places) {
-        Log.d("HttpRequest", "SUCCESS");
-        updateUIWithListOfUsers(places);
+    public void onResponse(@Nullable PlacesByTextSearchContainer places) {
+        for (Place result : places.getResults()) {
+            HttpRequestDetailsPlace(result.getPlaceId());
+        }
+        b.jsonReturn.setText(stringBuilder.toString());
+        updateUIWhenStopingHTTPRequest(stringBuilder.toString());
+    }
 
-        // Access a Firestore instance
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+    @Override
+    public void onResponse(@Nullable PlaceDetailsContainer place) {
+        PlaceWithDetails result = place.getResult();
+        stringBuilder.append("-" + result.getPlaceId() + "\n");
+        stringBuilder.append("-- " + result.getName() + "\n");
+        stringBuilder.append("-- " + result.getFormattedAddress() + "\n");
+        stringBuilder.append("-- Lat. " + result.getGeometry().getLocation().getLat() + "\n");
+        stringBuilder.append("-- Lng. " + result.getGeometry().getLocation().getLng() + "\n");
 
 
-        /*
-        Result restaurant = new Result("");
-        db.collection("restaurant").document("LA").set(city);
-         */
 
+    // Access a Firestore instance
+    //FirebaseFirestore db = FirebaseFirestore.getInstance();
+    //Result restaurant = new Result("");
+    //db.collection("restaurant").document("LA").set(city);
 
 
     }
@@ -76,17 +86,7 @@ public class RestaurantCalls extends AppCompatActivity implements PlaceCalls.Cal
         b.bowlForWait.setVisibility(View.GONE);
     }
 
-    private void updateUIWithListOfUsers(Place places){
-        StringBuilder stringBuilder = new StringBuilder();
-            for (Result result : places.getResults()) {
-                stringBuilder.append("-" + result.getName() + "\n");
-                stringBuilder.append("--" + result.getFormattedAddress() + "\n");
-                stringBuilder.append("-- lat. " + result.getGeometry().getLocation().getLat() + "\n");
-                stringBuilder.append("-- lng. " + result.getGeometry().getLocation().getLng() + "\n");
-            }
-        b.jsonReturn.setText(stringBuilder.toString());
-        updateUIWhenStopingHTTPRequest(stringBuilder.toString());
-    }
+
 
 
 }
