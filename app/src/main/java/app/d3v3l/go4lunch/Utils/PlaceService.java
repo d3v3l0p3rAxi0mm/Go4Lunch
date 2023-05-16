@@ -19,8 +19,7 @@ public interface PlaceService {
 
     @GET("textsearch/json?key=" + BuildConfig.MAPS_API_KEY)
     // see documentation at https://developers.google.com/maps/documentation/places/web-service/search-text?hl=fr
-    //Call<List<Place>> getPlaces(@Query("query") String query, @Query("location") String location, @Query("radius") int radius, @Query("key") String key);
-    Call<List<Place>> getPlaces(@Query("query") String query);
+    Call<Place> getPlaces(@Query("query") String query, @Query("location") String location, @Query("radius") int radius);
 
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://maps.googleapis.com/maps/api/place/")

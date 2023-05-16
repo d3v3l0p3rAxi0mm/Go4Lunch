@@ -17,12 +17,12 @@ public class PlaceCalls {
 
     // 1 - Creating a callback
     public interface Callbacks {
-        void onResponse(@Nullable List<Place> places);
+        void onResponse(@Nullable Place places);
         void onFailure();
     }
 
     // Public method to start fetching places with given parameters
-    public static void fetchRestaurants(Callbacks callbacks, String query){
+    public static void fetchRestaurants(Callbacks callbacks, String query, String location, int radius){
 
         // Weak reference to callback (avoid memory leaks)
         final WeakReference<Callbacks> callbacksWeakReference = new WeakReference<>(callbacks);
@@ -31,20 +31,20 @@ public class PlaceCalls {
         PlaceService placeService = PlaceService.retrofit.create(PlaceService.class);
 
         // Create the call on GoogleMaps API
-        Call<List<Place>> call = placeService.getPlaces(query);
+        Call<Place> call = placeService.getPlaces(query, location, radius);
         // Start the call
-        call.enqueue(new Callback<List<Place>>() {
+        call.enqueue(new Callback<Place>() {
 
             @Override
-            public void onResponse(Call<List<Place>> call, Response<List<Place>> response) {
-                // 2.5 - Call the proper callback used in controller
+            public void onResponse(Call<Place> call, Response<Place> response) {
+                // Call the proper callback used in controller
                 if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onResponse(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<Place>> call, Throwable t) {
-                // 2.5 - Call the proper callback used in controller
-                Log.d("CallBackZ", callbacksWeakReference.get().toString());
+            public void onFailure(Call<Place> call, Throwable t) {
+                // Call the proper callback used in controller
+                Log.d("CallBack", callbacksWeakReference.get().toString());
                 if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onFailure();
             }
         });

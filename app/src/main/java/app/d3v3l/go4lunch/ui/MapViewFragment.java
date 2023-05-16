@@ -66,13 +66,27 @@ public class MapViewFragment extends Fragment {
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
                 // When map is loaded
+                googleMap.moveCamera(CameraUpdateFactory.zoomBy(14));
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                googleMap.setMyLocationEnabled(true);
 
                 // For positioning a marker on the map
+                /*
                 LatLng myPlace = new LatLng(47, 2.3);
                 googleMap.addMarker(new MarkerOptions()
                         .position(myPlace)
                         .title("My Place"));
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(myPlace));
+                 */
 
                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
