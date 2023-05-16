@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -89,19 +88,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void loadMapViewFragment() {
-
-        /*
-        FragmentManager manager = ((AppCompatActivity) b.activityHomeFrameLayout.getContext()).getSupportFragmentManager();
-        MapViewFragment mapViewFragment = MapViewFragment.newInstance();
-        manager.beginTransaction().replace(R.id.activity_home_frame_layout, mapViewFragment).commit();
-        */
-
         Fragment mapFragment = new MapViewFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(b.activityHomeFrameLayout.getId(), mapFragment)
                 .commit();
-
     }
 
     private void loadListViewFragment() {
