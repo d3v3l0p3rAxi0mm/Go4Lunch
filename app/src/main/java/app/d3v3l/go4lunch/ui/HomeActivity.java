@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -58,6 +59,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             if (idRessource == R.id.activity_home_drawer_logout) {
                 userManager.signOut(this).addOnSuccessListener(aVoid -> finish());
             }
+            // Case when user click on Logout Button
+            if (idRessource == R.id.activity_home_drawer_call_places) {
+                loadApiFirstCallFragment();
+            }
             return true;
         });
 
@@ -105,6 +110,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         FragmentManager manager = ((AppCompatActivity) b.activityHomeFrameLayout.getContext()).getSupportFragmentManager();
         WorkmatesFragment workmatesFragment = WorkmatesFragment.newInstance();
         manager.beginTransaction().replace(R.id.activity_home_frame_layout, workmatesFragment).commit();
+    }
+
+    private void loadApiFirstCallFragment() {
+        FragmentManager manager = ((AppCompatActivity) b.activityHomeFrameLayout.getContext()).getSupportFragmentManager();
+        ApiFirstCallFragment apiFirstCallFragment = ApiFirstCallFragment.newInstance();
+        manager.beginTransaction().replace(R.id.activity_home_frame_layout, apiFirstCallFragment).commit();
     }
 
     @Override

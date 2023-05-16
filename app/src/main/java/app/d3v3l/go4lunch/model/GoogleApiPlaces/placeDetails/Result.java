@@ -1,5 +1,5 @@
 
-package app.d3v3l.go4lunch.model;
+package app.d3v3l.go4lunch.model.GoogleApiPlaces.placeDetails;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
@@ -7,9 +7,21 @@ import com.google.gson.annotations.SerializedName;
 
 public class Result {
 
+    @SerializedName("address_components")
+    @Expose
+    private List<AddressComponent> addressComponents;
+    @SerializedName("adr_address")
+    @Expose
+    private String adrAddress;
     @SerializedName("business_status")
     @Expose
     private String businessStatus;
+    @SerializedName("delivery")
+    @Expose
+    private Boolean delivery;
+    @SerializedName("dine_in")
+    @Expose
+    private Boolean dineIn;
     @SerializedName("formatted_address")
     @Expose
     private String formattedAddress;
@@ -28,33 +40,61 @@ public class Result {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("opening_hours")
-    @Expose
-    private OpeningHours openingHours;
-    @SerializedName("photos")
-    @Expose
-    private List<Photo> photos;
     @SerializedName("place_id")
     @Expose
     private String placeId;
     @SerializedName("plus_code")
     @Expose
     private PlusCode plusCode;
-    @SerializedName("price_level")
-    @Expose
-    private Integer priceLevel;
     @SerializedName("rating")
     @Expose
-    private Double rating;
+    private Integer rating;
     @SerializedName("reference")
     @Expose
     private String reference;
+    @SerializedName("reviews")
+    @Expose
+    private List<Review> reviews;
+    @SerializedName("serves_beer")
+    @Expose
+    private Boolean servesBeer;
+    @SerializedName("serves_lunch")
+    @Expose
+    private Boolean servesLunch;
+    @SerializedName("serves_wine")
+    @Expose
+    private Boolean servesWine;
     @SerializedName("types")
     @Expose
     private List<String> types;
+    @SerializedName("url")
+    @Expose
+    private String url;
     @SerializedName("user_ratings_total")
     @Expose
     private Integer userRatingsTotal;
+    @SerializedName("utc_offset")
+    @Expose
+    private Integer utcOffset;
+    @SerializedName("vicinity")
+    @Expose
+    private String vicinity;
+
+    public List<AddressComponent> getAddressComponents() {
+        return addressComponents;
+    }
+
+    public void setAddressComponents(List<AddressComponent> addressComponents) {
+        this.addressComponents = addressComponents;
+    }
+
+    public String getAdrAddress() {
+        return adrAddress;
+    }
+
+    public void setAdrAddress(String adrAddress) {
+        this.adrAddress = adrAddress;
+    }
 
     public String getBusinessStatus() {
         return businessStatus;
@@ -62,6 +102,22 @@ public class Result {
 
     public void setBusinessStatus(String businessStatus) {
         this.businessStatus = businessStatus;
+    }
+
+    public Boolean getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(Boolean delivery) {
+        this.delivery = delivery;
+    }
+
+    public Boolean getDineIn() {
+        return dineIn;
+    }
+
+    public void setDineIn(Boolean dineIn) {
+        this.dineIn = dineIn;
     }
 
     public String getFormattedAddress() {
@@ -112,22 +168,6 @@ public class Result {
         this.name = name;
     }
 
-    public OpeningHours getOpeningHours() {
-        return openingHours;
-    }
-
-    public void setOpeningHours(OpeningHours openingHours) {
-        this.openingHours = openingHours;
-    }
-
-    public List<Photo> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(List<Photo> photos) {
-        this.photos = photos;
-    }
-
     public String getPlaceId() {
         return placeId;
     }
@@ -144,19 +184,11 @@ public class Result {
         this.plusCode = plusCode;
     }
 
-    public Integer getPriceLevel() {
-        return priceLevel;
-    }
-
-    public void setPriceLevel(Integer priceLevel) {
-        this.priceLevel = priceLevel;
-    }
-
-    public Double getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
@@ -168,6 +200,38 @@ public class Result {
         this.reference = reference;
     }
 
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public Boolean getServesBeer() {
+        return servesBeer;
+    }
+
+    public void setServesBeer(Boolean servesBeer) {
+        this.servesBeer = servesBeer;
+    }
+
+    public Boolean getServesLunch() {
+        return servesLunch;
+    }
+
+    public void setServesLunch(Boolean servesLunch) {
+        this.servesLunch = servesLunch;
+    }
+
+    public Boolean getServesWine() {
+        return servesWine;
+    }
+
+    public void setServesWine(Boolean servesWine) {
+        this.servesWine = servesWine;
+    }
+
     public List<String> getTypes() {
         return types;
     }
@@ -176,12 +240,36 @@ public class Result {
         this.types = types;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public Integer getUserRatingsTotal() {
         return userRatingsTotal;
     }
 
     public void setUserRatingsTotal(Integer userRatingsTotal) {
         this.userRatingsTotal = userRatingsTotal;
+    }
+
+    public Integer getUtcOffset() {
+        return utcOffset;
+    }
+
+    public void setUtcOffset(Integer utcOffset) {
+        this.utcOffset = utcOffset;
+    }
+
+    public String getVicinity() {
+        return vicinity;
+    }
+
+    public void setVicinity(String vicinity) {
+        this.vicinity = vicinity;
     }
 
 }

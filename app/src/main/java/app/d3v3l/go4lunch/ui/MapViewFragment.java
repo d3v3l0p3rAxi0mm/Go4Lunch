@@ -66,7 +66,8 @@ public class MapViewFragment extends Fragment {
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
                 // When map is loaded
-                googleMap.moveCamera(CameraUpdateFactory.zoomBy(14));
+                googleMap.moveCamera(CameraUpdateFactory.zoomBy(15));
+                /*
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
@@ -79,14 +80,14 @@ public class MapViewFragment extends Fragment {
                 }
                 googleMap.setMyLocationEnabled(true);
 
+                 */
+
                 // For positioning a marker on the map
-                /*
-                LatLng myPlace = new LatLng(47, 2.3);
+                LatLng myPlace = new LatLng(46.660079946981696,2.297249870034013);
                 googleMap.addMarker(new MarkerOptions()
                         .position(myPlace)
-                        .title("My Place"));
+                        .title("Home"));
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(myPlace));
-                 */
 
                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override

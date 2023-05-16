@@ -52,12 +52,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Call API
-        b.callRestaurants.setOnClickListener(v -> {
-            Intent callRestaurantsIntent = new Intent(MainActivity.this, RestaurantCalls.class);
-            MainActivity.this.startActivity(callRestaurantsIntent);
-        });
-
     }
 
     private void startSignInActivity(String authType){
