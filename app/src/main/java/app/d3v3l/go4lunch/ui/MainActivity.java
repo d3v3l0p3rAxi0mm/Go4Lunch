@@ -1,10 +1,17 @@
 package app.d3v3l.go4lunch.ui;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.webkit.GeolocationPermissions;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -32,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(b.getRoot());
         setupListeners();
     }
+
 
 
     private void setupListeners(){

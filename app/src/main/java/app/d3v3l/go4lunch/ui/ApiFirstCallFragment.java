@@ -72,7 +72,7 @@ public class ApiFirstCallFragment extends Fragment implements PlaceCalls.Callbac
     private void executeHttpRequestWithRetrofit(){
         updateUIWhenStartingHTTPRequest();
         String myLocation = "46.66007,2.29724";
-        PlaceCalls.fetchRestaurants(this, "restaurants", myLocation);
+        PlaceCalls.fetchRestaurants(this, myLocation);
     }
 
     @Override
@@ -91,11 +91,6 @@ public class ApiFirstCallFragment extends Fragment implements PlaceCalls.Callbac
         }
         b.jsonReturnFragment.setText(stringBuilder.toString());
 
-
-
-        //updateUIWithListOfPlaces(places);
-
-
         // Access a Firestore instance
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -103,7 +98,7 @@ public class ApiFirstCallFragment extends Fragment implements PlaceCalls.Callbac
 
             Map<String, Object> place = new HashMap<>();
             place.put("place_id", result.getPlaceId());
-            place.put("name", result.getPlaceId());
+            place.put("name", result.getName());
             place.put("formatted_address", result.getFormattedAddress());
             place.put("latitude", result.getGeometry().getLocation().getLat());
             place.put("longitude", result.getGeometry().getLocation().getLng());
@@ -126,8 +121,6 @@ public class ApiFirstCallFragment extends Fragment implements PlaceCalls.Callbac
         }
         updateUIWhenStopingHTTPRequest();
 
-
-
     }
 
     @Override
@@ -149,18 +142,4 @@ public class ApiFirstCallFragment extends Fragment implements PlaceCalls.Callbac
         b.bowlForWaitFragment.setVisibility(View.GONE);
     }
 
-    private void updateUIWithListOfPlaces(PlaceSearchByText places){
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Result result : places.getResults()) {
-            Log.d("placeId", result.getPlaceId());
-            stringBuilder.append("    ID.        " + result.getPlaceId() + "\n");
-            stringBuilder.append("      name.    " + result.getName() + "\n");
-            stringBuilder.append("      address. " + result.getFormattedAddress() + "\n");
-            stringBuilder.append("      lat.     " + result.getGeometry().getLocation().getLat() + "\n");
-            stringBuilder.append("      lng.     " + result.getGeometry().getLocation().getLng() + "\n");
-            stringBuilder.append("      photos.  " + result.getPhotos() + "\n");
-        }
-        b.jsonReturnFragment.setText(stringBuilder.toString());
-        updateUIWhenStopingHTTPRequest();
-    }
 }

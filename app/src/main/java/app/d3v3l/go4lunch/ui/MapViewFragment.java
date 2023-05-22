@@ -15,13 +15,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.SphericalUtil;
 
 import app.d3v3l.go4lunch.R;
 
@@ -65,29 +68,27 @@ public class MapViewFragment extends Fragment {
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
+                googleMap.setMyLocationEnabled(true);
                 // When map is loaded
                 googleMap.moveCamera(CameraUpdateFactory.zoomBy(15));
-                /*
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                googleMap.setMyLocationEnabled(true);
 
-                 */
 
                 // For positioning a marker on the map
                 LatLng myPlace = new LatLng(46.660079946981696,2.297249870034013);
                 googleMap.addMarker(new MarkerOptions()
                         .position(myPlace)
                         .title("Home"));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(myPlace));
+                //googleMap.moveCamera(CameraUpdateFactory.newLatLng(myPlace));
+
+                LatLng resto = new LatLng(46.6424049,2.283553);
+                googleMap.addMarker(new MarkerOptions()
+                        .position(resto)
+                        .title("resto"));
+
+                googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(myPlace,10,0f,0f)));
+
+                Double a = SphericalUtil.computeDistanceBetween(myPlace,new LatLng(46.6424049,2.283553));
+                Toast.makeText(getActivity(), "Distance = " + a + "m", Toast.LENGTH_LONG).show();
 
                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override

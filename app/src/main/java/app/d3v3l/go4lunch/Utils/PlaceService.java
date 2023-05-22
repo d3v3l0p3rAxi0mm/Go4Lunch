@@ -11,9 +11,10 @@ import retrofit2.http.Query;
 
 public interface PlaceService {
 
-    @GET("textsearch/json?key=" + BuildConfig.MAPS_API_KEY)
+    @GET("nearbysearch/json?rankby=distance&keyword=restaurant&key=" + BuildConfig.MAPS_API_KEY)
     // see documentation at https://developers.google.com/maps/documentation/places/web-service/search-text?hl=fr
-    Call<PlaceSearchByText> getPlaces(@Query("query") String query, @Query("location") String location);
+
+    Call<PlaceSearchByText> getPlaces(@Query("location") String location);
 
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://maps.googleapis.com/maps/api/place/")

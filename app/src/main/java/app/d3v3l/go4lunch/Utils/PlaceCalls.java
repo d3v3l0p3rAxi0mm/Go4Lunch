@@ -21,7 +21,7 @@ public class PlaceCalls {
     }
 
     // Public method to start fetching places with given parameters
-    public static void fetchRestaurants(Callbacks callbacks, String query, String location){
+    public static void fetchRestaurants(Callbacks callbacks, String location){
 
         // Weak reference to callback (avoid memory leaks)
         final WeakReference<Callbacks> callbacksWeakReference = new WeakReference<>(callbacks);
@@ -30,7 +30,7 @@ public class PlaceCalls {
         PlaceService placeService = PlaceService.retrofit.create(PlaceService.class);
 
         // Create the call on GoogleMaps API
-        Call<PlaceSearchByText> call = placeService.getPlaces(query, location);
+        Call<PlaceSearchByText> call = placeService.getPlaces(location);
         // Start the call
         call.enqueue(new Callback<PlaceSearchByText>() {
 
