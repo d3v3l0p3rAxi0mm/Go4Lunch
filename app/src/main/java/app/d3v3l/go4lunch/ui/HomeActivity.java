@@ -6,15 +6,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -26,13 +38,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private ActivityHomeBinding b;
     private UserManager userManager = null;
+    private GoogleMap mMap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         b = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
-
         userManager = UserManager.getInstance();
         configureToolBar();
         configureDrawerLayout();
@@ -58,10 +71,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             // Case when user click on Logout Button
             if (idRessource == R.id.activity_home_drawer_logout) {
                 userManager.signOut(this).addOnSuccessListener(aVoid -> finish());
-            }
-            // Case when user click on Logout Button
-            if (idRessource == R.id.activity_home_drawer_call_places) {
-                loadApiFirstCallFragment();
             }
             return true;
         });
@@ -100,6 +109,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 .commit();
     }
 
+
     private void loadListViewFragment() {
         FragmentManager manager = ((AppCompatActivity) b.activityHomeFrameLayout.getContext()).getSupportFragmentManager();
         ListViewFragment listViewFragment = ListViewFragment.newInstance();
@@ -110,12 +120,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         FragmentManager manager = ((AppCompatActivity) b.activityHomeFrameLayout.getContext()).getSupportFragmentManager();
         WorkmatesFragment workmatesFragment = WorkmatesFragment.newInstance();
         manager.beginTransaction().replace(R.id.activity_home_frame_layout, workmatesFragment).commit();
-    }
-
-    private void loadApiFirstCallFragment() {
-        FragmentManager manager = ((AppCompatActivity) b.activityHomeFrameLayout.getContext()).getSupportFragmentManager();
-        ApiFirstCallFragment apiFirstCallFragment = ApiFirstCallFragment.newInstance();
-        manager.beginTransaction().replace(R.id.activity_home_frame_layout, apiFirstCallFragment).commit();
     }
 
     @Override
@@ -144,4 +148,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
+
+
 }

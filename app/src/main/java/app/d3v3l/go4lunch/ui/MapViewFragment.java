@@ -1,12 +1,24 @@
 package app.d3v3l.go4lunch.ui;
 
+import static android.content.ContentValues.TAG;
+
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationRequest;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -17,23 +29,47 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.CancellationToken;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.maps.android.SphericalUtil;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
+
 import app.d3v3l.go4lunch.R;
+import app.d3v3l.go4lunch.Utils.PlaceCalls;
+import app.d3v3l.go4lunch.databinding.FragmentMapViewBinding;
+import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Container;
+import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Result;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MapViewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapViewFragment extends Fragment {
+public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
+
+    private FragmentMapViewBinding b;
+    private GoogleMap googleMapGlobal;
+    private LatLng myLocation;
+
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
     public MapViewFragment() {
         // Required empty public constructor
@@ -55,79 +91,111 @@ public class MapViewFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        SearchMyPositionThenPlacesNearby();
+    }
+
+    @SuppressLint("MissingPermission")
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
-        View view = inflater.inflate(R.layout.fragment_map_view, container, false);
-        Context context = view.getContext();
+        b = FragmentMapViewBinding.inflate(getLayoutInflater());
 
         // Initialize map fragment
-        SupportMapFragment mapFragment = (SupportMapFragment)
-                getChildFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+
 
         mapFragment.getMapAsync(new OnMapReadyCallback() {
+
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
-                googleMap.setMyLocationEnabled(true);
-                // When map is loaded
-                googleMap.moveCamera(CameraUpdateFactory.zoomBy(15));
-
-
-                // For positioning a marker on the map
-                LatLng myPlace = new LatLng(46.660079946981696,2.297249870034013);
-                googleMap.addMarker(new MarkerOptions()
-                        .position(myPlace)
-                        .title("Home"));
-                //googleMap.moveCamera(CameraUpdateFactory.newLatLng(myPlace));
-
-                LatLng resto = new LatLng(46.6424049,2.283553);
-                googleMap.addMarker(new MarkerOptions()
-                        .position(resto)
-                        .title("resto"));
-
-                googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(myPlace,10,0f,0f)));
-
-                Double a = SphericalUtil.computeDistanceBetween(myPlace,new LatLng(46.6424049,2.283553));
-                Toast.makeText(getActivity(), "Distance = " + a + "m", Toast.LENGTH_LONG).show();
-
-                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                    @Override
-                    public void onMapClick(@NonNull LatLng latLng) {
-                        // When clicked on map
-                        // Initialize marker options
-                        MarkerOptions markerOptions=new MarkerOptions();
-                        // Set position of marker
-                        markerOptions.position(latLng);
-                        // Set title of marker
-                        markerOptions.title(latLng.latitude+" : "+latLng.longitude);
-                        // Remove all marker
-                        googleMap.clear();
-                        // Animating to zoom the marker
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
-                        // Add marker on map
-                        googleMap.addMarker(markerOptions);
-                    }
-                });
+                googleMapGlobal = googleMap;
+                googleMapGlobal.setMyLocationEnabled(true);
             }
         });
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
-        return view;
 
+        return b.getRoot();
     }
 
-    /*
+    private void SearchMyPositionThenPlacesNearby() {
+        @SuppressLint("MissingPermission")
+        Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
+        locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                myLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                executeHttpRequestWithRetrofit();
+            }
+        });
+    }
+
+    // Execute HTTP request and update UI
+    private void executeHttpRequestWithRetrofit(){
+        PlaceCalls.fetchRestaurants(this, myLocation.latitude + "," + myLocation.longitude);
+    }
+
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        // Add a marker in my Place,
-        // and move the map's camera to the same location.
-        LatLng myPlace = new LatLng(47.0802, 2.3927);
-        googleMap.addMarker(new MarkerOptions()
-                .position(myPlace)
-                .title("My Place"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(myPlace));
+    public void onResponse(@Nullable Container places) {
+
+        // Access a Firestore instance
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        DecimalFormat df = new DecimalFormat("#.#");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
+        for (Result result : places.getResults()) {
+
+            Map<String, Object> place = new HashMap<>();
+            place.put("place_id", result.getPlaceId());
+            place.put("name", result.getName());
+            place.put("address", result.getVicinity());
+            place.put("latitude", result.getGeometry().getLocation().getLat());
+            place.put("longitude", result.getGeometry().getLocation().getLng());
+
+            Double distance = SphericalUtil.computeDistanceBetween(myLocation,new LatLng(result.getGeometry().getLocation().getLat(),result.getGeometry().getLocation().getLng()));
+            String distanceSimplified;
+            if (distance>=1000) {
+                distance = distance /1000;
+                distanceSimplified = df.format(distance) + " km";
+            } else {
+                distanceSimplified = distance.intValue() + " m";
+            }
+
+            LatLng coords = new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng());
+
+            googleMapGlobal.addMarker(new MarkerOptions()
+                    .position(coords)
+                    .title(result.getName())
+                    .snippet("Distance : " + distanceSimplified)
+                    .anchor(0.5f, 1));
+
+            db.collection("restaurants").document(result.getPlaceId())
+                    .set(place)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error writing document", e);
+                        }
+                    });
+
+        }
+        googleMapGlobal.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(myLocation,10,0f,0f)));
+
     }
-    */
 
 
+    @Override
+    public void onFailure() {
+        Log.d("HttpRequest", "FAILURE");
+    }
 
 }

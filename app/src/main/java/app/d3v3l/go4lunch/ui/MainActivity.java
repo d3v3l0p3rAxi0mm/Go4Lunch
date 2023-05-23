@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.GeolocationPermissions;
@@ -16,6 +18,11 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Collections;
@@ -31,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding b;
     private static final int RC_SIGN_IN = 123;
     private final UserManager userManager = UserManager.getInstance();
+    private LatLng myLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +131,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-
 
 }

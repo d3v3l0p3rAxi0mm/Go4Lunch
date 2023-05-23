@@ -24,8 +24,9 @@ import java.util.Map;
 import app.d3v3l.go4lunch.R;
 import app.d3v3l.go4lunch.Utils.PlaceCalls;
 import app.d3v3l.go4lunch.databinding.FragmentApiFirstCallBinding;
+import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Container;
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesSearchByText.PlaceSearchByText;
-import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesSearchByText.Result;
+import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Result;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,7 +77,7 @@ public class ApiFirstCallFragment extends Fragment implements PlaceCalls.Callbac
     }
 
     @Override
-    public void onResponse(@Nullable PlaceSearchByText places) {
+    public void onResponse(@Nullable Container places) {
         Log.d("HttpRequest", "SUCCESS");
         Log.d("HttpRequest", String.valueOf(places.getResults().size()));
         StringBuilder stringBuilder = new StringBuilder();
@@ -84,7 +85,7 @@ public class ApiFirstCallFragment extends Fragment implements PlaceCalls.Callbac
             Log.d("placeId", result.getPlaceId());
             stringBuilder.append("    ID.        " + result.getPlaceId() + "\n");
             stringBuilder.append("      name.    " + result.getName() + "\n");
-            stringBuilder.append("      address. " + result.getFormattedAddress() + "\n");
+            stringBuilder.append("      address. " + result.getVicinity() + "\n");
             stringBuilder.append("      lat.     " + result.getGeometry().getLocation().getLat() + "\n");
             stringBuilder.append("      lng.     " + result.getGeometry().getLocation().getLng() + "\n");
             stringBuilder.append("      photos.  " + result.getPhotos() + "\n");
@@ -99,7 +100,7 @@ public class ApiFirstCallFragment extends Fragment implements PlaceCalls.Callbac
             Map<String, Object> place = new HashMap<>();
             place.put("place_id", result.getPlaceId());
             place.put("name", result.getName());
-            place.put("formatted_address", result.getFormattedAddress());
+            place.put("formatted_address", result.getVicinity());
             place.put("latitude", result.getGeometry().getLocation().getLat());
             place.put("longitude", result.getGeometry().getLocation().getLng());
 
@@ -122,6 +123,7 @@ public class ApiFirstCallFragment extends Fragment implements PlaceCalls.Callbac
         updateUIWhenStopingHTTPRequest();
 
     }
+
 
     @Override
     public void onFailure() {

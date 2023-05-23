@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="16dp"
-        android:text="The app needs location permission to work. Please click on the link below to authorize your phone to share its GPS chip."
+        android:text="The app needs location permission to start. Please click on the link below to authorize your phone to share its GPS chip."
         android:textColor="@color/white"
         android:textStyle="italic"
         android:textSize="20sp"
@@ -80,7 +80,20 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="16dp"
-        android:text="You have refused access to geolocation. Retry or close the application."
+        android:text="You have refused access to geolocation. This access is essential to start the application. Allow location access again or close the application."
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:textStyle="italic"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <TextView
+        android:id="@+id/ActivityPermission_textview_alertNeverAskAgain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="You have permanently refused to give location permission to the app. If you changed your mind, go to app settings or close the app to uninstall it."
         android:visibility="gone"
         android:textColor="@color/white"
         android:textStyle="italic"
@@ -90,29 +103,39 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.6"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintHeight_percent="0.6">
 
 
         <Button
             android:id="@+id/ActivityPermission_Button_allowGeolocation"
             android:layout_width="300dp"
             android:layout_height="64dp"
-            android:layout_marginBottom="36dp"
             android:backgroundTint="@color/white"
-            android:text="Allow geolocation"
+            android:text="Allow location"
             android:textColor="#000000"
             android:textStyle="bold"
             app:icon="@drawable/baseline_gps_fixed_24"
             app:iconTint="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/ActivityPermission_Button_CloseApplication"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/ActivityPermission_Button_parameters"
+            android:layout_width="300dp"
+            android:layout_height="64dp"
+            android:backgroundTint="@color/white"
+            android:text="go to parameters"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:icon="@drawable/baseline_settings_24"
+            app:iconTint="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/ActivityPermission_Button_CloseApplication"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
@@ -123,11 +146,12 @@
             android:text="close application"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
+            android:visibility="gone"
             app:icon="@drawable/baseline_close_24"
             app:iconTint="@color/white"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/ActivityPermission_Button_allowGeolocation"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

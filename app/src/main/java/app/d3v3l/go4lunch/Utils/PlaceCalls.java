@@ -6,7 +6,7 @@ import androidx.annotation.Nullable;
 
 import java.lang.ref.WeakReference;
 
-import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesSearchByText.PlaceSearchByText;
+import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Container;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,7 +16,7 @@ public class PlaceCalls {
 
     // 1 - Creating a callback
     public interface Callbacks {
-        void onResponse(@Nullable PlaceSearchByText places);
+        void onResponse(@Nullable Container places);
         void onFailure();
     }
 
@@ -30,18 +30,18 @@ public class PlaceCalls {
         PlaceService placeService = PlaceService.retrofit.create(PlaceService.class);
 
         // Create the call on GoogleMaps API
-        Call<PlaceSearchByText> call = placeService.getPlaces(location);
+        Call<Container> call = placeService.getPlaces(location);
         // Start the call
-        call.enqueue(new Callback<PlaceSearchByText>() {
+        call.enqueue(new Callback<Container>() {
 
             @Override
-            public void onResponse(Call<PlaceSearchByText> call, Response<PlaceSearchByText> response) {
+            public void onResponse(Call<Container> call, Response<Container> response) {
                 // Call the proper callback used in controller
                 if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onResponse(response.body());
             }
 
             @Override
-            public void onFailure(Call<PlaceSearchByText> call, Throwable t) {
+            public void onFailure(Call<Container> call, Throwable t) {
                 // Call the proper callback used in controller
                 Log.d("CallBack", callbacksWeakReference.get().toString());
                 if (callbacksWeakReference.get() != null) callbacksWeakReference.get().onFailure();
