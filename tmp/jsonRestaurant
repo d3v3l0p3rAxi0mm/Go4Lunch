@@ -1,0 +1,923 @@
+{
+   "html_attributions" : [],
+   "next_page_token" : "AZose0llrwN9eH0m86jN5464zoFf8DBQSNk-DrFvcnYy4uPLPyM7wNrC2K73OJmsWU3Kg7wabX7xHAAmxGYkl2HAMHnhv2LZe8lL9qB2vR9Yw9p5fm24yNTRL49EeHLFBaMQwSc3tAWzPD370v4zCLi4uanmqvZpS_OhBT5eAHvzaVO0uyzZHVI22xwyG6wD6L2VmcouPp_4-GMuZRbfUmfiWOpDLLal83RQqIv3ZQtebEJknJ2zXnepyKjZYAddR2_rVrC5s_vB6u5Aa6af06lLLPXRiT9FRZktdqQ8AWeEBsASckCM5qWK3vIL_nMb73WzF4l61jDIfIms87lbxYfJfC5uUFYwP83RmVRK1JLj_AicAvehaQNWzipmenaZ1_Rk5ONgpOxI2TLej3Wy7AanR_jhZv6frBTFIBFbGIOoQn7Jdip0OcgbjWkSOf5BVfETdshC",
+   "results" : [
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "Imp. des Rochers, 15100 Coren, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 45.0779003,
+               "lng" : 3.106186
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.07918942989272,
+                  "lng" : 3.107517979892722
+               },
+               "southwest" : {
+                  "lat" : 45.07648977010728,
+                  "lng" : 3.104818320107277
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "La Cure Gourmande",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "photos" : [
+            {
+               "height" : 2268,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/109430019958166117107\"\u003eA Google User\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0mpooVVyYelZeEtQwgmBV9Fby36IiG7zmw75ZFT-PsPx6oerE8jDwcRSgmq_nyev5A4AnKf3M5f2YRVAPdxX7fHG1xnFUYNKglWp7e8GIN951cNE-68a-1dK5xAawS-X4sYJGfiK9pXAITz-mIbJFNbTObATHezuLu5vnkzIJV6bDG1",
+               "width" : 4032
+            }
+         ],
+         "place_id" : "ChIJE3pBGHPT90cRe6XcCXQf9bc",
+         "plus_code" : {
+            "compound_code" : "34H4+5F Coren",
+            "global_code" : "8FQ534H4+5F"
+         },
+         "price_level" : 2,
+         "rating" : 4.7,
+         "reference" : "ChIJE3pBGHPT90cRe6XcCXQf9bc",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 201
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "Le Bourg, 15100 Roffiac, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 45.052367,
+               "lng" : 3.0390519
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.05365282989272,
+                  "lng" : 3.040401879892721
+               },
+               "southwest" : {
+                  "lat" : 45.05095317010728,
+                  "lng" : 3.037702220107277
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Restaurant de la Tour",
+         "photos" : [
+            {
+               "height" : 4032,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/114236593064992703613\"\u003ePat Mas\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0lwiZ4z64PghqNNJM3Yz_G2BuCOVK84n1DsEM-Kvp4HUymYdlCWaiMDrVUtRsqh_bwYdSDFrhmWnOpi2b6qzgIoanCHMJHOdAQihmt0yjkhj5dEU2tBa3QvUdvNC1HvW2qkfIDnfGJ6SJ3sMGw98hSNgrs0hnItMBm0wNaxJhvKE6mf",
+               "width" : 3024
+            }
+         ],
+         "place_id" : "ChIJSzVgQ-jT90cRE_WERKAus8I",
+         "plus_code" : {
+            "compound_code" : "322Q+WJ Roffiac",
+            "global_code" : "8FQ5322Q+WJ"
+         },
+         "price_level" : 2,
+         "rating" : 4.5,
+         "reference" : "ChIJSzVgQ-jT90cRE_WERKAus8I",
+         "types" : [
+            "bar",
+            "cafe",
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 130
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "Le Bourg, 15100 Les Ternes, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 44.9965221,
+               "lng" : 3.0138824
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 44.99784062989273,
+                  "lng" : 3.015211629892722
+               },
+               "southwest" : {
+                  "lat" : 44.99514097010728,
+                  "lng" : 3.012511970107278
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "L Auberge Du Chateau",
+         "photos" : [
+            {
+               "height" : 4160,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/114331724012030685317\"\u003eFranchesca Caggiano\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0n0FH3_toqoCM-RuXgzuWDe7MwjxBFS_u-Ee-gGlHd9BqyUtx0Utx05KaSI70nmXK5SPL92URyRx2jyi-YcOKaGfmWO4ferQ-_-aoR5TpOzdz6R9ePgq5M6AMrO1WbaO2EeDWk6S35tjiPciM5WOwC_tDcr9Jyl_X3VfJhoEEwcmp49",
+               "width" : 2336
+            }
+         ],
+         "place_id" : "ChIJPessXYfW90cRER7FmVGqjnc",
+         "plus_code" : {
+            "compound_code" : "X2W7+JH Les Ternes",
+            "global_code" : "8FP5X2W7+JH"
+         },
+         "rating" : 4.9,
+         "reference" : "ChIJPessXYfW90cRER7FmVGqjnc",
+         "types" : [ "restaurant", "bar", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 15
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "Le Bourg, 15100 Roffiac, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 45.0523629,
+               "lng" : 3.0391355
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.05365742989272,
+                  "lng" : 3.040482079892723
+               },
+               "southwest" : {
+                  "lat" : 45.05095777010728,
+                  "lng" : 3.037782420107278
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Planchon Lilian",
+         "place_id" : "ChIJSzVgQ-jT90cRm736qLz3DDs",
+         "plus_code" : {
+            "compound_code" : "322Q+WM Roffiac",
+            "global_code" : "8FQ5322Q+WM"
+         },
+         "rating" : 5,
+         "reference" : "ChIJSzVgQ-jT90cRm736qLz3DDs",
+         "types" : [ "restaurant", "bar", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 1
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "Place du M\u00e8ze, 15260 Oradour, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 44.920476,
+               "lng" : 2.9348059
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 44.92181857989272,
+                  "lng" : 2.936022779892722
+               },
+               "southwest" : {
+                  "lat" : 44.91911892010728,
+                  "lng" : 2.933323120107277
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "LE RELAIS DE L'EPIE",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "photos" : [
+            {
+               "height" : 3456,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/104636807174033498684\"\u003eLouis-Etienne Lorenzo\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0lJTQH8ro6SOK9xgBDYDE-mKi3RsJDDwTyytOV7Bn2vAjlRyxuhjntpfSsx-gblI4m5K8WRRNxX0SkJg243lMg0o7QUDOwD9rhdgBgHxZWslwYOA9jpQukZON7e7oeRvCxp8CqmpvywTitb6-aEE73SDFM6d-WzgPUob1XaFXF_BeCS",
+               "width" : 4608
+            }
+         ],
+         "place_id" : "ChIJ1bwcK4HNshIRtwu9eP9rWDI",
+         "plus_code" : {
+            "compound_code" : "WWCM+5W Neuv\u00e9glise-sur-Truy\u00e8re",
+            "global_code" : "8FP4WWCM+5W"
+         },
+         "price_level" : 1,
+         "rating" : 4.5,
+         "reference" : "ChIJ1bwcK4HNshIRtwu9eP9rWDI",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 101
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "42 Av. du Lioran, 15100 Saint-Flour, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 45.0384177,
+               "lng" : 3.0692641
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.03974867989272,
+                  "lng" : 3.070575179892723
+               },
+               "southwest" : {
+                  "lat" : 45.03704902010728,
+                  "lng" : 3.067875520107278
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "La Brasserie",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "photos" : [
+            {
+               "height" : 4032,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/112891361496439730928\"\u003eA Google User\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0lRs9UBPFHfVkW-Q7oGHT3C3CiSyLY3Ok9p_cGI-k8njFfz2f32ebBOmNRJBShw01pIMlvo-O3_gseObvpXQRzgOGfXvMWUqStlj11kOICcHiWn2OPnUCi_SAQAA-EN2LlLp4KgnmgkZ9m0gZfKfys5-eHhMqNoC89mY-NXlh-f1V_Y",
+               "width" : 3024
+            }
+         ],
+         "place_id" : "ChIJoSpmMnnT90cRAOMdMUgueMM",
+         "plus_code" : {
+            "compound_code" : "23Q9+9P Saint-Flour",
+            "global_code" : "8FQ523Q9+9P"
+         },
+         "rating" : 4.4,
+         "reference" : "ChIJoSpmMnnT90cRAOMdMUgueMM",
+         "types" : [ "restaurant", "bar", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 86
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "2 rue du puy 15260, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 44.9356497,
+               "lng" : 3.0432665
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 44.93699677989272,
+                  "lng" : 3.044644729892722
+               },
+               "southwest" : {
+                  "lat" : 44.93429712010727,
+                  "lng" : 3.041945070107277
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Mallet Etablissements",
+         "photos" : [
+            {
+               "height" : 2048,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/115334518444483980839\"\u003efran\u00e7ois vangheluwe\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0nWXK4fsDhsFrXgfK92S9ebv2_IB1jCju7RSNahEix5ACtYdwza0Gwaj6_7yU31kPj1QBlYgtV0Z8UFyglVeM1QwIvAuvegTRBev-EfiuO8BoNhbXV8pQesgT0rd_bSKEF9cuqKpm7pz1sFHdS0fKCiwC6voY4hV52YzZYVwNiXkL1R",
+               "width" : 1536
+            }
+         ],
+         "place_id" : "ChIJ3Z3f0O7UshIR9Y15sLy4Yms",
+         "plus_code" : {
+            "compound_code" : "W2PV+78 Neuv\u00e9glise-sur-Truy\u00e8re",
+            "global_code" : "8FP5W2PV+78"
+         },
+         "price_level" : 1,
+         "rating" : 4.6,
+         "reference" : "ChIJ3Z3f0O7UshIR9Y15sLy4Yms",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 99
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "La Barge, 15100 Alleuze, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 44.9622351,
+               "lng" : 3.0857579
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 44.96354687989272,
+                  "lng" : 3.087178279892723
+               },
+               "southwest" : {
+                  "lat" : 44.96084722010728,
+                  "lng" : 3.084478620107278
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Auberge du Ch\u00e2teau d'Alleuze",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "photos" : [
+            {
+               "height" : 3456,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/102828116337178049895\"\u003eJean-Luc Colin\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0mOupBbbwjq5rizWEDeFO2Tyv0iewZ9lERvtr_ZyxJgFPrSgraU-rkz7dxl4ltggYWnhWqVGY6KRKsDYETBOkv_j35ZvrkxhXNFDuT4T1zp2PyrpcowTlZ9Gvsm4bwmULBMONHATgp2jua6KqLtpSJA8t--Mn3p_DTh5NuAjYTW4GPl",
+               "width" : 4608
+            }
+         ],
+         "place_id" : "ChIJM8BZTpfV90cRG5A7-PTMNoE",
+         "plus_code" : {
+            "compound_code" : "X36P+V8 Alleuze",
+            "global_code" : "8FP5X36P+V8"
+         },
+         "rating" : 4.7,
+         "reference" : "ChIJM8BZTpfV90cRG5A7-PTMNoE",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 91
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "le Belv\u00e9d\u00e8re de mallet, 15110 Fridefont, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 44.913086,
+               "lng" : 3.110333
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 44.91443992989272,
+                  "lng" : 3.111589629892723
+               },
+               "southwest" : {
+                  "lat" : 44.91174027010728,
+                  "lng" : 3.108889970107278
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Restaurant le Belvedere de Mallet",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "photos" : [
+            {
+               "height" : 3096,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/110909989458852392022\"\u003eRestaurant le Belvedere de Mallet\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0lhImJ6Do5HvgxnvZ74phzlzEgxRl40m7893KvlxeJpsUnO8ubFC1Kc92HxrDM4ky5PKhztIeqXwarIHHzpFbutt4ALTFFoTkSnIXuqoUudj-oS2692GKPk9wy0h9jY3n4eANg5heNxQlAyvBQUDmyU9NUb_83nr8MgiNu1gnETxt0-",
+               "width" : 4128
+            }
+         ],
+         "place_id" : "ChIJK7GkvG0qsxIRjpdsRQzq5Ag",
+         "plus_code" : {
+            "compound_code" : "W476+64 Fridefont",
+            "global_code" : "8FP5W476+64"
+         },
+         "rating" : 4.2,
+         "reference" : "ChIJK7GkvG0qsxIRjpdsRQzq5Ag",
+         "types" : [ "lodging", "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 174
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "2 Pl. Odilon de Merc\u0153ur, 15100 Saint-Flour, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 45.0320954,
+               "lng" : 3.0980977
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.03341722989272,
+                  "lng" : 3.099526679892722
+               },
+               "southwest" : {
+                  "lat" : 45.03071757010727,
+                  "lng" : 3.096827020107277
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Espace Gourmand",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "photos" : [
+            {
+               "height" : 1860,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/102645640612407887513\"\u003eNicolas Lafitte\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0mvQXIE_I4x4iHs1n3nwNyQig77Jf81SF6YF8qzqqWQXai9fMOsFcJ9vPYFpHppFEbGhb82QahV4E6pLeeYKN-H0EzrDNvnt5y4yyaoQRmdNmRDZp75mfgf2XGf56nJ4CLo_2PSdnoJIJ2b0eOp6zTlYDHytFRO8Y-MkCFTiHKsFmYw",
+               "width" : 4032
+            }
+         ],
+         "place_id" : "ChIJy9HvJ1bT90cR82evZdyBdH0",
+         "plus_code" : {
+            "compound_code" : "23JX+R6 Saint-Flour",
+            "global_code" : "8FQ523JX+R6"
+         },
+         "price_level" : 2,
+         "rating" : 4.5,
+         "reference" : "ChIJy9HvJ1bT90cR82evZdyBdH0",
+         "types" : [ "restaurant", "bar", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 618
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "25 Rue des Lacs, 15100 Saint-Flour, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 45.0329911,
+               "lng" : 3.0913237
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.03435752989272,
+                  "lng" : 3.092667729892722
+               },
+               "southwest" : {
+                  "lat" : 45.03165787010727,
+                  "lng" : 3.089968070107278
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Chez Genevi\u00e8ve",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "photos" : [
+            {
+               "height" : 684,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/111170827270232451980\"\u003eA Google User\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0lNe11DJYmQCG2ko8bR_ABXEqcnUvPsXcOF61i2lNhwLjAmQzIMRRHRLGK6rbhtANbPDvFFMDNtl5hinlIpRSkJ2Stn1dGCye161JD6ISqsJDcaOhkz6c4AdhIdGdsXXWWHwQrOlTOjzlqQFi9hSRhbd-sjmfid0SqeAqzAi1hjl5VZ",
+               "width" : 1279
+            }
+         ],
+         "place_id" : "ChIJTffcp1jT90cR99IQcMVfDdc",
+         "plus_code" : {
+            "compound_code" : "23MR+5G Saint-Flour",
+            "global_code" : "8FQ523MR+5G"
+         },
+         "price_level" : 2,
+         "rating" : 4.4,
+         "reference" : "ChIJTffcp1jT90cR99IQcMVfDdc",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 708
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "15100 Roffiac, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 45.0523119,
+               "lng" : 3.0401442
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.05366252989272,
+                  "lng" : 3.041445079892722
+               },
+               "southwest" : {
+                  "lat" : 45.05096287010727,
+                  "lng" : 3.038745420107277
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Auberge De La Vall\u00e9e",
+         "photos" : [
+            {
+               "height" : 8000,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/100518467039062845098\"\u003eHades Hendrix\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0nIljMJJB_Pr1f5vTGsZGFGiajVFDrzOO-vpz2QcVGxbGXjQjCzP0pwfQimtTlw-j8twL6JDCilfLQGsHNVY3RqGpZJcojApZmNJS0cxv3nFRyELi_BD-pw2VtOyEDu_B6Dgt3JyQF5JIBKvXsY2-qkr6H1GPH0YFekEIMIbIRMZt0d",
+               "width" : 6000
+            }
+         ],
+         "place_id" : "ChIJR5vFzenT90cRjxZyy91FYJI",
+         "plus_code" : {
+            "compound_code" : "322R+W3 Roffiac",
+            "global_code" : "8FQ5322R+W3"
+         },
+         "price_level" : 1,
+         "rating" : 4.4,
+         "reference" : "ChIJR5vFzenT90cRjxZyy91FYJI",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 86
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "3 Cr Spy des Ternes, 15100 Saint-Flour, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 45.0342388,
+               "lng" : 3.0904995
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.03566852989272,
+                  "lng" : 3.091878079892722
+               },
+               "southwest" : {
+                  "lat" : 45.03296887010728,
+                  "lng" : 3.089178420107277
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Le Quinze Cent",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "photos" : [
+            {
+               "height" : 3120,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/115957384698377191068\"\u003eDamian Kaniecki\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0m-5EGRVWM9h4pqNgPGTe8Uh5qpfSYNCyDpp0UJjt5Z8-CIJCJhLEBrDauHvvfAY2fMThCFOi-ALswK7pCRMhJWw7qdJ5ClGusuDu-bNA2ME6xS9hAT1FNzy2D8LEUsIgm6fp7sqzXRtPc1LP1eg7SsKv-d8IT_EZ_-RtaK6H7MZcJz",
+               "width" : 4160
+            }
+         ],
+         "place_id" : "ChIJIUDqHP_T90cROJMAV7ohQDA",
+         "plus_code" : {
+            "compound_code" : "23MR+P6 Saint-Flour",
+            "global_code" : "8FQ523MR+P6"
+         },
+         "rating" : 4.2,
+         "reference" : "ChIJIUDqHP_T90cROJMAV7ohQDA",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 183
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "36 Rue de la Rollandie, 15100 Saint-Flour, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 45.0327899,
+               "lng" : 3.0924836
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.03415602989272,
+                  "lng" : 3.093770479892722
+               },
+               "southwest" : {
+                  "lat" : 45.03145637010728,
+                  "lng" : 3.091070820107277
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Folie des Sens",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 540,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/118122628351752173764\"\u003eA Google User\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0lKRxmcwzQWowq7kveGqONWvOwiYJnicx9o5JHQEQEbzC4FL5V4QaVXZDz8AN60-4KFXiVoTQAZFPPPEzf3mNe-zUclarg9AAG9P4sZjBhc2NFYw2Ty4GDY9fdoxjwZ68NUwlY69O-WeDylABr7drTd4VLJfFPRwcRGuoJHijFoOiud",
+               "width" : 960
+            }
+         ],
+         "place_id" : "ChIJgSVgX7nV90cRuGm24HbWwkM",
+         "plus_code" : {
+            "compound_code" : "23MR+4X Saint-Flour",
+            "global_code" : "8FQ523MR+4X"
+         },
+         "price_level" : 2,
+         "rating" : 4.8,
+         "reference" : "ChIJgSVgX7nV90cRuGm24HbWwkM",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 405
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "61 Rue des Lacs, 15100 Saint-Flour, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 45.0328396,
+               "lng" : 3.0897681
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.03420122989272,
+                  "lng" : 3.091124529892722
+               },
+               "southwest" : {
+                  "lat" : 45.03150157010727,
+                  "lng" : 3.088424870107278
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Les \u00celes du Cantal",
+         "opening_hours" : {
+            "open_now" : true
+         },
+         "photos" : [
+            {
+               "height" : 3955,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/117878844026307360797\"\u003eLes Iles du Cantal\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0kQXBDD8mRnm5ejvTRWKRXBskKopYmkC9u3fLIysvl_WWvWec5QX6iIVWOYXkRBgoaKAZIVjGsmMCLF4GmxuZEJQhNcle-x28dYjhz6cPIHBt06KVV7wwuZRbQhLcTdSmFxowHccuufbCZPkj742sXo73MfvVWlPZ1Ayz2a_AJZA3EE",
+               "width" : 5719
+            }
+         ],
+         "place_id" : "ChIJvRj4oKDU90cRtuy47fRg8zI",
+         "plus_code" : {
+            "compound_code" : "23MQ+4W Saint-Flour",
+            "global_code" : "8FQ523MQ+4W"
+         },
+         "price_level" : 2,
+         "rating" : 4.4,
+         "reference" : "ChIJvRj4oKDU90cRtuy47fRg8zI",
+         "types" : [
+            "bar",
+            "cafe",
+            "store",
+            "restaurant",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 820
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "16 Bellevue, 15100 Saint-Georges, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 45.0339731,
+               "lng" : 3.1103394
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.03530437989272,
+                  "lng" : 3.111690079892722
+               },
+               "southwest" : {
+                  "lat" : 45.03260472010727,
+                  "lng" : 3.108990420107277
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Le Bellevue",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "photos" : [
+            {
+               "height" : 3000,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/104368611642415260933\"\u003eA Google User\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0mZYkpZYYi3Cw6ZWq0RO1XhETaKMSI5pa-8E-lVP8dFD9WZyoq-TLZvUpO5qIYHpDLelkPwV0QGGLHlOAMVe07PrLInERk6Vx8fI9jZoHqQUWQFyuomvSf8Fx54emzhas8j9G2mGwZ9DfZDmBnyprRulJV9Y4_y8pe7YT_WT3looqQy",
+               "width" : 4000
+            }
+         ],
+         "place_id" : "ChIJr8IuqUgt9kcRvByOIsoPPwQ",
+         "plus_code" : {
+            "compound_code" : "24M6+J4 Saint-Georges",
+            "global_code" : "8FQ524M6+J4"
+         },
+         "rating" : 4.9,
+         "reference" : "ChIJr8IuqUgt9kcRvByOIsoPPwQ",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 9
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "16 Zac Montplaisir Ouest Montplain, 15100 Andelat, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 45.0387597,
+               "lng" : 3.060019
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.04015952989272,
+                  "lng" : 3.061442529892722
+               },
+               "southwest" : {
+                  "lat" : 45.03745987010728,
+                  "lng" : 3.058742870107277
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "La Mangoune Saint-Flour",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "photos" : [
+            {
+               "height" : 1333,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/103528702774409834780\"\u003eA Google User\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0nmzOCoUfhR7VDntbya6VD3u8n2Wm4D2Q7AnkQXqqnDDRCmjuZhXVGXdqojxsNt0qWKyfscwAgua-PiobX83fXPdtITdP9J29gkaVaOYPpSS1kNDk1lA9N47JebKu_ontXiP1lSZMRQ2AgEfhqKsGgF6WienCfqUM3uzXBd4-U5sgFN",
+               "width" : 2000
+            }
+         ],
+         "place_id" : "ChIJqWoWI4TT90cRrV6_2ADjMNI",
+         "plus_code" : {
+            "compound_code" : "23Q5+FX Andelat",
+            "global_code" : "8FQ523Q5+FX"
+         },
+         "price_level" : 2,
+         "rating" : 3.9,
+         "reference" : "ChIJqWoWI4TT90cRrV6_2ADjMNI",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 1004
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "4 Rue des Agials, 15100 Saint-Flour, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 45.0335214,
+               "lng" : 3.0901206
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.03489717989272,
+                  "lng" : 3.091487629892723
+               },
+               "southwest" : {
+                  "lat" : 45.03219752010728,
+                  "lng" : 3.088787970107278
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Restaurant Chez Greco",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "photos" : [
+            {
+               "height" : 2448,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/108400390229295413738\"\u003eXavi Prat\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0mtkNmXE-T2AHrnR_XGR52nqzrETC8rDajOHaBLow7KmDyGicEn3m69aiEr4xdHB5o6LDHm3DAl080pYcnDpvIjwlyMG7101pws1cw-jJXtcsJzG9DRwlJtYd8i98O2-t-7MSKZ_yDqTVnJT7oslgHxCVf8ID3KgquGHoeZz1UwDnNm",
+               "width" : 3264
+            }
+         ],
+         "place_id" : "ChIJn27URF_T90cRJfb8ixrYVjk",
+         "plus_code" : {
+            "compound_code" : "23MR+C2 Saint-Flour",
+            "global_code" : "8FQ523MR+C2"
+         },
+         "price_level" : 2,
+         "rating" : 4.4,
+         "reference" : "ChIJn27URF_T90cRJfb8ixrYVjk",
+         "types" : [
+            "restaurant",
+            "bar",
+            "cafe",
+            "food",
+            "point_of_interest",
+            "establishment"
+         ],
+         "user_ratings_total" : 442
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "15100 Villedieu, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 44.999448,
+               "lng" : 3.063686
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.00086862989272,
+                  "lng" : 3.065096979892722
+               },
+               "southwest" : {
+                  "lat" : 44.99816897010727,
+                  "lng" : 3.062397320107277
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Marie Pariseau",
+         "opening_hours" : {
+            "open_now" : false
+         },
+         "place_id" : "ChIJnfwLhoDV90cRp1z54zizDvE",
+         "plus_code" : {
+            "compound_code" : "X3X7+QF Villedieu",
+            "global_code" : "8FP5X3X7+QF"
+         },
+         "rating" : 0,
+         "reference" : "ChIJnfwLhoDV90cRp1z54zizDvE",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 0
+      },
+      {
+         "business_status" : "OPERATIONAL",
+         "formatted_address" : "47 Pl. de la Libert\u00e9, 15100 Saint-Flour, France",
+         "geometry" : {
+            "location" : {
+               "lat" : 45.03359529999999,
+               "lng" : 3.1002403
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 45.03488907989272,
+                  "lng" : 3.101540029892722
+               },
+               "southwest" : {
+                  "lat" : 45.03218942010727,
+                  "lng" : 3.098840370107278
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+         "icon_background_color" : "#FF9E67",
+         "icon_mask_base_uri" : "https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet",
+         "name" : "Restaurant Le Jasmin",
+         "photos" : [
+            {
+               "height" : 1200,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/106197939270461779117\"\u003ewilhelmine sibille\u003c/a\u003e"
+               ],
+               "photo_reference" : "AZose0kv8-rELrH_m3_u2yohsIUB4IhUm7tEIYWSjVia52Q3IEBGtJTCkRsioIk0Lz8ZUATlvGlwquotePlLkHGPqG1O5mXNSyXsd4tpNryLVHbxRHnNoedr9dPpCGYqCwr6qI-R5b7JBCmHJRGqtvWnbeMVbn6Xqf8HnST9qqtci1BP8B_k",
+               "width" : 1600
+            }
+         ],
+         "place_id" : "ChIJM7UBDlbT90cRnCm4OgSzdgs",
+         "plus_code" : {
+            "compound_code" : "24M2+C3 Saint-Flour",
+            "global_code" : "8FQ524M2+C3"
+         },
+         "price_level" : 1,
+         "rating" : 4.1,
+         "reference" : "ChIJM7UBDlbT90cRnCm4OgSzdgs",
+         "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+         "user_ratings_total" : 195
+      }
+   ],
+   "status" : "OK"
+}

@@ -1,19 +1,35 @@
-package app.d3v3l.go4lunch;
+package app.d3v3l.go4lunch.ui;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
+import android.webkit.GeolocationPermissions;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
+import app.d3v3l.go4lunch.R;
 import app.d3v3l.go4lunch.databinding.ActivityMainBinding;
 import app.d3v3l.go4lunch.manager.UserManager;
 
@@ -21,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding b;
     private static final int RC_SIGN_IN = 123;
-    private UserManager userManager = UserManager.getInstance();
+    private final UserManager userManager = UserManager.getInstance();
+    private LatLng myLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,25 +46,40 @@ public class MainActivity extends AppCompatActivity {
         b = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
         setupListeners();
-
     }
 
+
+
     private void setupListeners(){
+        // Email Authentification
         b.ActivityMainButtonSignInWithEmmail.setOnClickListener(view -> {
             if(userManager.isCurrentUserLogged()){
                 startHomeActivity();
             }else{
-                startSignInActivity();
+                startSignInActivity("email");
+            }
+        });
+        // Google Authentification
+        b.ActivityMainButtonSignInWithGoogle.setOnClickListener(v -> {
+            if(userManager.isCurrentUserLogged()){
+                startHomeActivity();
+            }else{
+                startSignInActivity("google");
             }
         });
 
     }
 
-    private void startSignInActivity(){
+    private void startSignInActivity(String authType){
 
-        // Choose authentication providers
-        List<AuthUI.IdpConfig> providers =
-                Collections.singletonList(new AuthUI.IdpConfig.EmailBuilder().build());
+        List<AuthUI.IdpConfig> providers;
+        if (Objects.equals(authType, "email")) {
+            providers = Collections.singletonList(new AuthUI.IdpConfig.EmailBuilder().build());
+        } else if (Objects.equals(authType, "google")) {
+            providers = Collections.singletonList(new AuthUI.IdpConfig.GoogleBuilder().build());
+        } else {
+            providers = null;
+        }
 
         startActivityForResult(
                 AuthUI.getInstance()
@@ -55,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                         .setTheme(R.style.Theme_Go4Lunch)
                         .setAvailableProviders(providers)
                         .setIsSmartLockEnabled(false, true)
-                        .setLogo(R.drawable.baseline_people_24)
+                        .setLogo(R.drawable.baseline_fingerprint_24)
                         .build(),
                 RC_SIGN_IN);
     }
@@ -82,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             // SUCCESS
             if (resultCode == RESULT_OK) {
-                //userManager.createUser();
+                userManager.createUser();
                 startHomeActivity();
                 //showSnackBar(getString(R.string.connection_succeed));
             } else {
@@ -99,7 +131,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-
 
 }

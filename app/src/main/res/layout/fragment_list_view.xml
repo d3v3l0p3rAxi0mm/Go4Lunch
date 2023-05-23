@@ -1,40 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<androidx.recyclerview.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_restaurants"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListViewFragment" >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
-            android:text="List View"
-            android:textSize="56sp"
-            android:textColor="@color/black"
-            android:gravity="bottom|center"/>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:src="@drawable/baseline_view_list_24"
-            android:backgroundTint="@color/Primary"
-            app:tint="@color/Primary" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6"
-            android:text="" />
-
-    </LinearLayout>
-
-</FrameLayout>
+    tools:context=".ui.HomeActivity"
+    tools:listitem="@layout/item_restaurant" />

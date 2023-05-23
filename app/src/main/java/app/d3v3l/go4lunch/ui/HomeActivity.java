@@ -1,36 +1,57 @@
-package app.d3v3l.go4lunch;
+package app.d3v3l.go4lunch.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseUser;
 
+import app.d3v3l.go4lunch.R;
 import app.d3v3l.go4lunch.databinding.ActivityHomeBinding;
 import app.d3v3l.go4lunch.manager.UserManager;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityHomeBinding b;
-    private final UserManager userManager = UserManager.getInstance();
+    private UserManager userManager = null;
+    private GoogleMap mMap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         b = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
-
+        userManager = UserManager.getInstance();
         configureToolBar();
         configureDrawerLayout();
         configureNavigationView();
         loadMapViewFragment();
+        updateUIWithUserData();
 
         // conditions of bottomNav clicks
         b.bottomNavigation.setOnItemSelectedListener(item -> {
@@ -47,13 +68,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         b.activityHomeNavView.setNavigationItemSelectedListener(item -> {
             int idRessource = item.getItemId();
+            // Case when user click on Logout Button
             if (idRessource == R.id.activity_home_drawer_logout) {
-                userManager.signOut(this).addOnSuccessListener(aVoid -> { finish(); });
+                userManager.signOut(this).addOnSuccessListener(aVoid -> finish());
             }
             return true;
         });
 
     }
+
+
+    private void updateUIWithUserData(){
+        if(userManager.isCurrentUserLogged()){
+            FirebaseUser user = userManager.getCurrentUser();
+            setInfoUserData(user);
+        }
+    }
+
+
 
     private void configureToolBar(){
         setSupportActionBar(b.activityHomeToolbar);
@@ -70,10 +102,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void loadMapViewFragment() {
-        FragmentManager manager = ((AppCompatActivity) b.activityHomeFrameLayout.getContext()).getSupportFragmentManager();
-        MapViewFragment mapViewFragment = MapViewFragment.newInstance();
-        manager.beginTransaction().replace(R.id.activity_home_frame_layout, mapViewFragment).commit();
+        Fragment mapFragment = new MapViewFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(b.activityHomeFrameLayout.getId(), mapFragment)
+                .commit();
     }
+
 
     private void loadListViewFragment() {
         FragmentManager manager = ((AppCompatActivity) b.activityHomeFrameLayout.getContext()).getSupportFragmentManager();
@@ -91,4 +126,28 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
     }
+
+
+    private void setInfoUserData(FirebaseUser user){
+        if (userManager.getCurrentUser() != null) {
+            String name = TextUtils.isEmpty(user.getDisplayName()) ? getString(R.string.info_no_username_found) : user.getDisplayName();
+            TextView nameView = b.activityHomeNavView.getHeaderView(0).findViewById(R.id.menuDrawerName);
+            nameView.setText(name);
+
+            String email = TextUtils.isEmpty(user.getEmail()) ? getString(R.string.info_no_email_found) : user.getEmail();
+            TextView emailView = b.activityHomeNavView.getHeaderView(0).findViewById(R.id.menuDrawerEmail);
+            emailView.setText(email);
+
+            ImageView pictureView = b.activityHomeNavView.getHeaderView(0).findViewById(R.id.menuDrawerAvatar);
+            if(user.getPhotoUrl() != null){
+                Glide.with(this)
+                        .load(user.getPhotoUrl())
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(pictureView);
+            }
+        }
+
+    }
+
+
 }

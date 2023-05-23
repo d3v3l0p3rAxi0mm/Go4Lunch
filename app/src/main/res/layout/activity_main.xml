@@ -6,7 +6,7 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <ImageView
         android:id="@+id/homeScreen"
@@ -60,12 +60,12 @@
             android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginTop="84dp"
+            android:layout_marginTop="72dp"
             android:contentDescription="@string/go4lunch_logo"
             android:paddingStart="80dp"
             android:paddingEnd="80dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/bowl" />
