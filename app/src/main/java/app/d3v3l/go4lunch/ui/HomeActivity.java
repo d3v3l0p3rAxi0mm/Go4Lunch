@@ -112,6 +112,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             FirebaseUser user = userManager.getCurrentUser();
             setInfoUserData(user);
         }
+
     }
 
     private void configureToolBar(){
