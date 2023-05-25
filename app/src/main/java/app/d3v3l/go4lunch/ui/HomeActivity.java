@@ -49,15 +49,10 @@ import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Photo;
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Result;
 import app.d3v3l.go4lunch.model.Restaurant;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityHomeBinding b;
     private UserManager userManager = null;
-    private GoogleMap mMap;
-    //private final ListViewFragment listViewFragment = ListViewFragment.newInstance();
-    //private List<Restaurant> mRestaurants = new ArrayList<>();
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +131,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 .add(b.activityHomeFrameLayout.getId(), mapFragment)
                 .commit();
     }
-
 
     private void loadListViewFragment() {
         FragmentManager manager = ((AppCompatActivity) b.activityHomeFrameLayout.getContext()).getSupportFragmentManager();

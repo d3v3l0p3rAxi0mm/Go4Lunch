@@ -33,12 +33,11 @@ import app.d3v3l.go4lunch.R;
 import app.d3v3l.go4lunch.databinding.ActivityMainBinding;
 import app.d3v3l.go4lunch.manager.UserManager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private ActivityMainBinding b;
     private static final int RC_SIGN_IN = 123;
     private final UserManager userManager = UserManager.getInstance();
-    private LatLng myLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -16,15 +16,18 @@
         android:theme="@style/Theme.Go4Lunch"
         tools:targetApi="31">
         <activity
-            android:name=".RestaurantDetailsActivity"
+            android:name=".ui.permissions.LocationPermissionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.RestaurantDetailsActivity"
             android:exported="false" />
 
         <service
             android:name=".ui.MainActivity"
-            android:foregroundServiceType="location">
-
-            <!-- Any inner elements would go here. -->
-        </service>
+            android:foregroundServiceType="location" />
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
@@ -34,7 +37,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".ui.PermissionActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,10 +45,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity"></activity>
         <activity
-            android:name=".ui.HomeActivity"
-            android:exported="false"></activity>
+            android:name=".ui.BaseActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

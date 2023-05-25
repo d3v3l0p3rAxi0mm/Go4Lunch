@@ -52,7 +52,6 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
     private FragmentMapViewBinding b;
     private GoogleMap googleMapGlobal;
     private LatLng myLocation;
-
     private FusedLocationProviderClient fusedLocationProviderClient;
 
     public MapViewFragment() {
@@ -97,6 +96,7 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
         });
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
         return b.getRoot();
+
     }
 
     private void SearchMyPositionThenPlacesNearby() {
