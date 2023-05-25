@@ -49,17 +49,13 @@ import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Photo;
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Result;
 import app.d3v3l.go4lunch.model.Restaurant;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PlaceCalls.Callbacks {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityHomeBinding b;
     private UserManager userManager = null;
     private GoogleMap mMap;
-
-    private final ListViewFragment listViewFragment = ListViewFragment.newInstance();
-    private List<Restaurant> mRestaurants = new ArrayList<>();
-
-    private LatLng myLocation;
-    private FusedLocationProviderClient fusedLocationProviderClient;
+    //private final ListViewFragment listViewFragment = ListViewFragment.newInstance();
+    //private List<Restaurant> mRestaurants = new ArrayList<>();
 
 
 
@@ -73,21 +69,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         configureToolBar();
         configureDrawerLayout();
         configureNavigationView();
-        loadMapViewFragment();
         updateUIWithUserData();
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // conditions of bottomNav clicks
         b.bottomNavigation.setOnItemSelectedListener(item -> {
             int idRessource = item.getItemId();
             if (idRessource == R.id.listViewButton) {
                 loadListViewFragment();
-                searchMyPositionThenPlacesNearby();
             } else if (idRessource == R.id.workmatesButton) {
                 loadWorkmatesFragment();
             } else {
                 loadMapViewFragment();
-                searchMyPositionThenPlacesNearby();
             }
             return true;
         });
@@ -106,7 +98,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-        searchMyPositionThenPlacesNearby();
+        loadMapViewFragment();
+
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
     }
 
     private void updateUIWithUserData(){
@@ -115,8 +113,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             setInfoUserData(user);
         }
     }
-
-
 
     private void configureToolBar(){
         setSupportActionBar(b.activityHomeToolbar);
@@ -143,7 +139,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void loadListViewFragment() {
         FragmentManager manager = ((AppCompatActivity) b.activityHomeFrameLayout.getContext()).getSupportFragmentManager();
-        //ListViewFragment listViewFragment = ListViewFragment.newInstance();
+        ListViewFragment listViewFragment = ListViewFragment.newInstance();
         manager.beginTransaction().replace(R.id.activity_home_frame_layout, listViewFragment).commit();
     }
 
@@ -159,11 +155,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    @Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
-        //searchMyPositionThenPlacesNearby();
-    }
+
 
     private void setInfoUserData(FirebaseUser user){
         if (userManager.getCurrentUser() != null) {
@@ -186,68 +178,5 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
-    private void searchMyPositionThenPlacesNearby() {
-
-        @SuppressLint("MissingPermission")
-        Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
-        locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                myLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                Log.d("Myposition", myLocation.toString());
-                executeHttpRequestWithRetrofit();
-            }
-        });
-    }
-
-
-
-    // Execute HTTP request and update UI
-    private void executeHttpRequestWithRetrofit(){
-        PlaceCalls.fetchRestaurants(this, myLocation.latitude + "," + myLocation.longitude);
-    }
-
-    @Override
-    public void onResponse(@Nullable Container places) {
-
-        DecimalFormat df = new DecimalFormat("#.#");
-        df.setRoundingMode(RoundingMode.HALF_UP);
-
-        //mRestaurants.clear();
-
-        for (Result result : places.getResults()) {
-            Double distance = SphericalUtil.computeDistanceBetween(myLocation,new LatLng(result.getGeometry().getLocation().getLat(),result.getGeometry().getLocation().getLng()));
-            String distanceSimplified;
-            if (distance>=1000) {
-                distance = distance /1000;
-                distanceSimplified = df.format(distance) + " km";
-            } else {
-                distanceSimplified = distance.intValue() + " m";
-            }
-
-
-            List<Photo> photos = result.getPhotos();
-            Photo photo;
-            if (photos == null) {
-                photo = null;
-            } else {
-                photo = result.getPhotos().get(0);
-            }
-
-            Restaurant savedResultInList = new Restaurant(result.getName(), result.getVicinity(), result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng(), distanceSimplified, photo);
-            mRestaurants.add(savedResultInList);
-
-            listViewFragment.updateData(mRestaurants);
-
-        }
-
-    }
-
-
-    @Override
-    public void onFailure() {
-        Log.d("HttpRequest", "FAILURE");
-    }
 
 }

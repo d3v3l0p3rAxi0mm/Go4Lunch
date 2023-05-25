@@ -55,13 +55,13 @@ import app.d3v3l.go4lunch.model.Restaurant;
  * Use the {@link ListViewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListViewFragment extends Fragment {
+public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
 
-    private ListRestaurantAdapter listRestaurantAdapter;
     private FragmentListViewBinding b;
+    private ListRestaurantAdapter listRestaurantAdapter;
     private RecyclerView mRecyclerView;
-    //private LatLng myLocation;
-    //private FusedLocationProviderClient fusedLocationProviderClient;
+    private LatLng myLocation;
+    private FusedLocationProviderClient fusedLocationProviderClient;
     private List<Restaurant> mRestaurants = new ArrayList<>();
 
     public ListViewFragment() {
@@ -81,9 +81,9 @@ public class ListViewFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mRecyclerView.setAdapter(new ListRestaurantAdapter(mRestaurants));
-        mRecyclerView.getAdapter().notifyDataSetChanged();
-        //SearchMyPositionThenPlacesNearby();
+        //mRecyclerView.setAdapter(new ListRestaurantAdapter(mRestaurants));
+        //mRecyclerView.getAdapter().notifyDataSetChanged();
+        SearchMyPositionThenPlacesNearby();
     }
 
     @Override
@@ -97,24 +97,9 @@ public class ListViewFragment extends Fragment {
         b = FragmentListViewBinding.inflate(getLayoutInflater());
         configureRecyclerView(b.getRoot());
 
-
-
-        //fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
         return b.getRoot();
     }
-
-    public void updateData(List<Restaurant> restaurants) {
-
-        if (mRecyclerView!=null) {
-            //mRestaurants.clear();
-            mRestaurants = restaurants;
-            mRecyclerView.setAdapter(new ListRestaurantAdapter(mRestaurants));
-            //mRecyclerView.notify();
-        }
-        mRestaurants = restaurants;
-    }
-
-
 
 
     // Configure RecyclerView
@@ -125,14 +110,15 @@ public class ListViewFragment extends Fragment {
     }
 
 
-/*    private void SearchMyPositionThenPlacesNearby() {
+    private void SearchMyPositionThenPlacesNearby() {
+        Log.d("XPX", "Enter in SearchMyPositionThenPlacesNearby");
         @SuppressLint("MissingPermission")
         Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
         locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
                 myLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                executeHttpRequestWithRetrofit();
+                executeHttpRequestInListViewWithRetrofit();
             }
         });
     }
@@ -140,7 +126,8 @@ public class ListViewFragment extends Fragment {
 
 
     // Execute HTTP request and update UI
-    private void executeHttpRequestWithRetrofit(){
+    private void executeHttpRequestInListViewWithRetrofit(){
+        Log.d("XPX", myLocation.toString());
         PlaceCalls.fetchRestaurants(this, myLocation.latitude + "," + myLocation.longitude);
     }
 
@@ -180,6 +167,6 @@ public class ListViewFragment extends Fragment {
     @Override
     public void onFailure() {
         Log.d("HttpRequest", "FAILURE");
-    }*/
+    }
 
 }

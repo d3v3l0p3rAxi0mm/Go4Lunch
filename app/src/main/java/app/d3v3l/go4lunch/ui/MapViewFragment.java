@@ -106,13 +106,14 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
             @Override
             public void onSuccess(Location location) {
                 myLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                executeHttpRequestWithRetrofit();
+                executeHttpRequestInMapWithRetrofit();
             }
         });
     }
 
     // Execute HTTP request and update UI
-    private void executeHttpRequestWithRetrofit(){
+    private void executeHttpRequestInMapWithRetrofit(){
+        Log.d("MyLocation in MapView", myLocation.toString());
         PlaceCalls.fetchRestaurants(this, myLocation.latitude + "," + myLocation.longitude);
     }
 
