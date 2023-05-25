@@ -46,6 +46,7 @@ import app.d3v3l.go4lunch.Utils.PlaceCalls;
 import app.d3v3l.go4lunch.databinding.FragmentListViewBinding;
 import app.d3v3l.go4lunch.databinding.FragmentMapViewBinding;
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Container;
+import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Photo;
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Result;
 import app.d3v3l.go4lunch.model.Restaurant;
 
@@ -54,13 +55,13 @@ import app.d3v3l.go4lunch.model.Restaurant;
  * Use the {@link ListViewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
+public class ListViewFragment extends Fragment {
 
     private ListRestaurantAdapter listRestaurantAdapter;
     private FragmentListViewBinding b;
     private RecyclerView mRecyclerView;
-    private LatLng myLocation;
-    private FusedLocationProviderClient fusedLocationProviderClient;
+    //private LatLng myLocation;
+    //private FusedLocationProviderClient fusedLocationProviderClient;
     private List<Restaurant> mRestaurants = new ArrayList<>();
 
     public ListViewFragment() {
@@ -80,7 +81,9 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
     @Override
     public void onResume() {
         super.onResume();
-        SearchMyPositionThenPlacesNearby();
+        mRecyclerView.setAdapter(new ListRestaurantAdapter(mRestaurants));
+        mRecyclerView.getAdapter().notifyDataSetChanged();
+        //SearchMyPositionThenPlacesNearby();
     }
 
     @Override
@@ -93,9 +96,25 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
 
         b = FragmentListViewBinding.inflate(getLayoutInflater());
         configureRecyclerView(b.getRoot());
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+
+
+        //fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
         return b.getRoot();
     }
+
+    public void updateData(List<Restaurant> restaurants) {
+
+        if (mRecyclerView!=null) {
+            //mRestaurants.clear();
+            mRestaurants = restaurants;
+            mRecyclerView.setAdapter(new ListRestaurantAdapter(mRestaurants));
+            //mRecyclerView.notify();
+        }
+        mRestaurants = restaurants;
+    }
+
+
 
 
     // Configure RecyclerView
@@ -105,7 +124,8 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
     }
 
-    private void SearchMyPositionThenPlacesNearby() {
+
+/*    private void SearchMyPositionThenPlacesNearby() {
         @SuppressLint("MissingPermission")
         Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
         locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -116,6 +136,8 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
             }
         });
     }
+
+
 
     // Execute HTTP request and update UI
     private void executeHttpRequestWithRetrofit(){
@@ -137,7 +159,17 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
             } else {
                 distanceSimplified = distance.intValue() + " m";
             }
-            Restaurant savedResultInList = new Restaurant(result.getName(), result.getVicinity(), result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng(), distanceSimplified);
+
+
+            List<Photo> photos = result.getPhotos();
+            Photo photo;
+            if (photos == null) {
+                photo = null;
+            } else {
+                photo = result.getPhotos().get(0);
+            }
+
+            Restaurant savedResultInList = new Restaurant(result.getName(), result.getVicinity(), result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng(), distanceSimplified, photo);
             mRestaurants.add(savedResultInList);
         }
         mRecyclerView.setAdapter(new ListRestaurantAdapter(mRestaurants));
@@ -148,6 +180,6 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
     @Override
     public void onFailure() {
         Log.d("HttpRequest", "FAILURE");
-    }
+    }*/
 
 }

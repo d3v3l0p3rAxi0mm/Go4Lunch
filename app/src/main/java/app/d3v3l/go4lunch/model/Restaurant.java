@@ -1,6 +1,8 @@
 
 package app.d3v3l.go4lunch.model;
 
+import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Photo;
+
 public class Restaurant {
 
     private String name;
@@ -8,14 +10,18 @@ public class Restaurant {
     private Double latitude;
     private Double longitude;
     private String distanceFromUser;
+    private Photo photo;
 
-    public Restaurant(String name, String address, Double latitude, Double longitude, String distanceFromUser) {
+
+    public Restaurant(String name, String address, Double latitude, Double longitude, String distanceFromUser, Photo photo) {
         this.name = name;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
         this.distanceFromUser = distanceFromUser;
+        this.photo = photo;
     }
+
 
     public String getName() {
         return name;
@@ -55,5 +61,13 @@ public class Restaurant {
 
     public void setDistanceFromUser(String distanceFromUser) {
         this.distanceFromUser = distanceFromUser;
+    }
+
+    public Photo getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
     }
 }
