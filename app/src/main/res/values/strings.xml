@@ -27,5 +27,10 @@
     <string name="search">Search</string>
     <string name="avatar">avatar</string>
     <string name="separation">separation</string>
+    <string name="photo_du_restaurant">Photo du restaurant</string>
+    <string name="ok">ok</string>
+    <string name="call">call</string>
+    <string name="like">like</string>
+    <string name="website">website</string>
 
 </resources>

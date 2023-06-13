@@ -1,6 +1,8 @@
 package app.d3v3l.go4lunch.ui;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -65,6 +67,16 @@ public class ListRestaurantAdapter extends RecyclerView.Adapter<ListRestaurantAd
                         .apply(RequestOptions.centerCropTransform())
                         .into(b.imageRestaurant);
             }
+
+            b.itemRestaurant.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(b.itemRestaurant.getContext(), RestaurantDetailsActivity.class);
+                    b.itemRestaurant.getContext().startActivity(intent);
+                }
+            });
+
+
         }
     }
 
