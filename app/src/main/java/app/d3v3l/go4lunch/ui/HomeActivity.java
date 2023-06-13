@@ -17,9 +17,12 @@ import androidx.fragment.app.FragmentManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
 
+import app.d3v3l.go4lunch.BuildConfig;
 import app.d3v3l.go4lunch.R;
 import app.d3v3l.go4lunch.databinding.ActivityHomeBinding;
 import app.d3v3l.go4lunch.manager.UserManager;
@@ -33,7 +36,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     //private List<Restaurant> mRestaurants = new ArrayList<>();
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         configureDrawerLayout();
         configureNavigationView();
         updateUIWithUserData();
+        loadMapViewFragment();
 
         // conditions of bottomNav clicks
         b.bottomNavigation.setOnItemSelectedListener(item -> {
@@ -68,12 +71,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             return true;
         });
 
+        /**
+         * Initialize Places. For simplicity, the API key is hard-coded. In a production
+         * environment we recommend using a secure mechanism to manage API keys.
+         */
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), BuildConfig.MAPS_API_KEY);
+        }
+        // Create a new Places client instance.
+        PlacesClient placesClient = Places.createClient(this);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadMapViewFragment();
     }
 
     @Override

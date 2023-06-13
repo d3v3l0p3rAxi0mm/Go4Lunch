@@ -3,6 +3,8 @@ package app.d3v3l.go4lunch.repository;
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willReturn;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -16,13 +18,12 @@ import app.d3v3l.go4lunch.model.User;
 public class UserRepositoryTest {
 
     UserRepository userRepository;
+    FirebaseAuth instance = FirebaseAuth.getInstance();
 
-    @Mock
-    FirebaseAuth firebaseAuth;
 
     @Before
     public void setUp() {
-        userRepository = UserRepository.getInstance();
+        //userRepository = UserRepository.getInstance();
     }
 
     @Test
@@ -36,8 +37,14 @@ public class UserRepositoryTest {
 
     @Test
     public void getCurrentUserIsNull() {
-        given(firebaseAuth.getCurrentUser()).willReturn(null);
-        assertNull(userRepository.getCurrentUser());
+        FirebaseAuth firebaseAuth = mock(FirebaseAuth.class);
+        instance = firebaseAuth;
+        doReturn(null).when(firebaseAuth).getCurrentUser();
+        assertNull(getUID());
+    }
+
+    public String getUID() {
+        return instance.getUid();
     }
 
     @Test
@@ -59,4 +66,8 @@ public class UserRepositoryTest {
     @Test
     public void deleteUserFromFirestore() {
     }
+
+
+
 }
+

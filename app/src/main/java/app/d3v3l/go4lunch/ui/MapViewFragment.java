@@ -1,8 +1,11 @@
 package app.d3v3l.go4lunch.ui;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
@@ -23,7 +26,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,12 +42,20 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.maps.android.SphericalUtil;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import app.d3v3l.go4lunch.R;
@@ -63,6 +76,7 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
     private FragmentMapViewBinding b;
     private GoogleMap googleMapGlobal;
     private LatLng myLocation;
+    private final int AUTOCOMPLETE_REQUEST_CODE = 0;
 
     private FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -83,7 +97,6 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -123,20 +136,32 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
         return b.getRoot();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.actionSearch:
+                onSearchCalled();
+                return true;
+            default:
+                return false;
+        }
+    }
 
     /**
      * For SearchView
      *
-     * @param menu
-     * @param inflater
+     * @param //menu
+     * @param //inflater
      */
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
         inflater.inflate(R.menu.activity_home_topmenu, menu);
         MenuItem item = menu.findItem(R.id.actionSearch);
-        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+/*        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
 
@@ -154,8 +179,41 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
                 //executeHttpRequestWithRetrofitAutocomplete(newText);
                 return true;
             }
-        });
+        });*/
     }
+
+
+    public void onSearchCalled() {
+        // Set the fields to specify which types of place data to return.
+        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
+        // Start the autocomplete intent.
+        Intent intent = new Autocomplete.IntentBuilder(
+                AutocompleteActivityMode.OVERLAY, fields).setCountry("NG") //NIGERIA
+                .build(getActivity());
+        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId() + ", " + place.getAddress());
+                Toast.makeText(getContext(), "ID: " + place.getId() + "address:" + place.getAddress() + "Name:" + place.getName() + " latlong: " + place.getLatLng(), Toast.LENGTH_LONG).show();
+                String address = place.getAddress();
+                // do query with address
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Toast.makeText(getContext(), "Error: " + status.getStatusMessage(), Toast.LENGTH_LONG).show();
+                Log.i(TAG, status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+    }
+
 
 
     private void SearchMyPositionThenPlacesNearby() {

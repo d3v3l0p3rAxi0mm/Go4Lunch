@@ -84,6 +84,8 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
         return fragment;
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -91,6 +93,8 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
         //mRecyclerView.getAdapter().notifyDataSetChanged();
         SearchMyPositionThenPlacesNearby();
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -128,7 +132,10 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
         inflater.inflate(R.menu.activity_home_topmenu, menu);
         MenuItem item = menu.findItem(R.id.actionSearch);
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+
         SearchView searchView = (SearchView) item.getActionView();
+
         searchView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
