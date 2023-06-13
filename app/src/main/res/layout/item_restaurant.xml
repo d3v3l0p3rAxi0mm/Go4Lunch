@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_restaurant"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
     android:background="@color/white"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:baselineAligned="false">
 
 
     <LinearLayout
@@ -21,7 +21,7 @@
             android:id="@+id/NameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="left"
+            android:gravity="start"
             android:textSize="16sp"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -31,7 +31,7 @@
             android:id="@+id/AddressTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="left"
+            android:gravity="start"
             android:textSize="14sp"
             android:textColor="@color/black"
             tools:text="Address" />
@@ -40,7 +40,7 @@
             android:id="@+id/OpeningHoursTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="left"
+            android:gravity="start"
             android:textSize="14sp"
             android:textStyle="italic"
             android:textColor="@color/black"
@@ -50,7 +50,7 @@
             android:id="@+id/photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="left"
+            android:gravity="start"
             android:textSize="12sp"
             android:textStyle="italic"
             android:textColor="@color/black"
@@ -63,13 +63,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginStart="8dp"
-        android:gravity="right">
+        android:gravity="end">
 
         <TextView
             android:id="@+id/DistanceTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:gravity="end"
             android:textSize="14sp"
             android:textColor="@color/black"
             tools:text="Distance" />
@@ -83,7 +83,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:background="@drawable/baseline_person_outline_24"
                 android:backgroundTint="@color/black" />
 
@@ -99,54 +99,14 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/rating_bar"
+            style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="8dp">
-
-            <ImageView
-                android:id="@+id/score1"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="right"
-                android:background="@drawable/baseline_star_24"
-                android:backgroundTint="#FFC107" />
-
-            <ImageView
-                android:id="@+id/score2"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="right"
-                android:background="@drawable/baseline_star_24"
-                android:backgroundTint="#FFC107" />
-
-            <ImageView
-                android:id="@+id/score3"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="right"
-                android:background="@drawable/baseline_star_24"
-                android:backgroundTint="#FFC107" />
-
-            <ImageView
-                android:id="@+id/score4"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="right"
-                android:background="@drawable/baseline_star_24"
-                android:backgroundTint="#FFC107" />
-
-            <ImageView
-                android:id="@+id/score5"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="right"
-                android:background="@drawable/baseline_star_24"
-                android:backgroundTint="#FFC107" />
-
-        </LinearLayout>
-
+            android:numStars="5"
+            android:text=""
+            android:theme="@style/RatingBarRestaurantRV" />
 
     </LinearLayout>
 

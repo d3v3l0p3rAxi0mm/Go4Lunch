@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Go4Lunch"
         tools:targetApi="31">
         <activity
-            android:name=".RestaurantDetailsActivity"
+            android:name=".ui.RestaurantDetailsActivity"
             android:exported="false" />
 
         <service
