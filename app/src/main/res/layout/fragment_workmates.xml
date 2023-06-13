@@ -1,40 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentWorkmates"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.WorkmatesFragment" >
+    android:background="@color/white"
+    tools:context=".ui.HomeActivity">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/Workmates_RecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
-            android:text="Workmates"
-            android:textSize="56sp"
-            android:textColor="@color/black"
-            android:gravity="bottom|center"/>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:src="@drawable/baseline_people_24"
-            android:backgroundTint="@color/Primary"
-            app:tint="@color/Primary" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6"
-            android:text="" />
-
-    </LinearLayout>
-
-</FrameLayout>
+        android:layout_height="match_parent" />
+</RelativeLayout>

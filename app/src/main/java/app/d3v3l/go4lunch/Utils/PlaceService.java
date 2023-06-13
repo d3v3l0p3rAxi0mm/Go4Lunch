@@ -14,8 +14,8 @@ public interface PlaceService {
 
     @GET("nearbysearch/json?rankby=distance&keyword=restaurant&key=" + BuildConfig.MAPS_API_KEY)
     // see documentation at https://developers.google.com/maps/documentation/places/web-service/search-text?hl=fr
-
     Call<Container> getPlaces(@Query("location") String location);
+
 
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://maps.googleapis.com/maps/api/place/")

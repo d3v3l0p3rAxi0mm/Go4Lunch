@@ -13,10 +13,6 @@
         android:icon="@drawable/baseline_settings_24"
         android:title="SETTINGS" />
     <item
-        android:id="@+id/activity_home_drawer_call_places"
-        android:icon="@drawable/baseline_map_24"
-        android:title="call GMaps Datas" />
-    <item
         android:id="@+id/activity_home_drawer_logout"
         android:icon="@drawable/baseline_logout_24"
         android:title="LOGOUT" />

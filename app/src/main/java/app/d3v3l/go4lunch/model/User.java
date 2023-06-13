@@ -9,6 +9,7 @@ public class User {
     @Nullable
     private String urlPicture;
 
+    // Needed for Firebase
     public User() { }
 
     public User(String uid, String username, @Nullable String urlPicture) {

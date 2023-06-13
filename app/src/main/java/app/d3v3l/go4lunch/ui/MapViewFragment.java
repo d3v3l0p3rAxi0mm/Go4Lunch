@@ -3,15 +3,24 @@ package app.d3v3l.go4lunch.ui;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -38,6 +47,7 @@ import java.util.Map;
 
 import app.d3v3l.go4lunch.R;
 import app.d3v3l.go4lunch.Utils.PlaceCalls;
+import app.d3v3l.go4lunch.databinding.ActivityHomeBinding;
 import app.d3v3l.go4lunch.databinding.FragmentMapViewBinding;
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Container;
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Result;
@@ -49,6 +59,7 @@ import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Result;
  */
 public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
 
+    private ActivityHomeBinding bHome;
     private FragmentMapViewBinding b;
     private GoogleMap googleMapGlobal;
     private LatLng myLocation;
@@ -72,6 +83,7 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -96,8 +108,55 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
             }
         });
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        //for SearchView
+        setHasOptionsMenu(true);
+        //change title of toolbar
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("I'm Hungry");
+
+
+        if (((AppCompatActivity) getActivity()).getSupportActionBar() != null){
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
+        }
+
         return b.getRoot();
     }
+
+
+    /**
+     * For SearchView
+     *
+     * @param menu
+     * @param inflater
+     */
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.activity_home_topmenu, menu);
+        MenuItem item = menu.findItem(R.id.actionSearch);
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.isEmpty()) {
+                    //executeHttpRequestWithRetrofit();
+                }
+                //executeHttpRequestWithRetrofitAutocomplete(newText);
+                return true;
+            }
+        });
+    }
+
 
     private void SearchMyPositionThenPlacesNearby() {
         @SuppressLint("MissingPermission")

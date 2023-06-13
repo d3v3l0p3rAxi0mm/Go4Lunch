@@ -24,5 +24,8 @@
 
     <string name="permission_denied_fine_location">Fine Location</string>
     <string name="permission_denied_coarse_location">Coarse Location</string>
+    <string name="search">Search</string>
+    <string name="avatar">avatar</string>
+    <string name="separation">separation</string>
 
 </resources>

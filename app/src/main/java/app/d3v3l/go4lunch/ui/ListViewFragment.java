@@ -8,6 +8,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -98,9 +104,49 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
         configureRecyclerView(b.getRoot());
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        //for SearchView
+        setHasOptionsMenu(true);
+        //change title of toolbar
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("I'm Hungry");
+
+
         return b.getRoot();
     }
 
+
+    /**
+     * For SearchView
+     *
+     * @param menu
+     * @param inflater
+     */
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.activity_home_topmenu, menu);
+        MenuItem item = menu.findItem(R.id.actionSearch);
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.isEmpty()) {
+                    //executeHttpRequestWithRetrofit();
+                }
+                //executeHttpRequestWithRetrofitAutocomplete(newText);
+                return true;
+            }
+        });
+    }
 
     // Configure RecyclerView
     private void configureRecyclerView(View view){
