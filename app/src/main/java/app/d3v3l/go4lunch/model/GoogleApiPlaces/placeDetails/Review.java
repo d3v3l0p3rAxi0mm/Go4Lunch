@@ -1,5 +1,5 @@
-package app.d3v3l.go4lunch.model.GoogleApiPlaces.placeDetails;
 
+package app.d3v3l.go4lunch.model.GoogleApiPlaces.placeDetails;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

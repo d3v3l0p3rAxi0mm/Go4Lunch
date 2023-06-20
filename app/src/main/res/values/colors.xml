@@ -11,6 +11,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#FFDDDDDD</color>
+    <color name="green">#FF63F04A</color>
+    <color name="transparent">#00FFFFFF</color>
 
     <style name="DrawerIcon" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@color/white</item>

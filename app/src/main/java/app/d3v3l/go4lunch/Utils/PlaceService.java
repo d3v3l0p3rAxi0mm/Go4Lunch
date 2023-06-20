@@ -1,8 +1,8 @@
 package app.d3v3l.go4lunch.Utils;
 
 import app.d3v3l.go4lunch.BuildConfig;
+import app.d3v3l.go4lunch.model.GoogleApiPlaces.placeDetails.DetailsContainer;
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Container;
-import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesSearchByText.PlaceSearchByText;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -15,6 +15,10 @@ public interface PlaceService {
     @GET("nearbysearch/json?rankby=distance&keyword=restaurant&key=" + BuildConfig.MAPS_API_KEY)
     // see documentation at https://developers.google.com/maps/documentation/places/web-service/search-text?hl=fr
     Call<Container> getPlaces(@Query("location") String location);
+
+    @GET("details/json?key=" + BuildConfig.MAPS_API_KEY)
+        // see documentation at https://developers.google.com/maps/documentation/places/web-service/search-text?hl=fr
+    Call<DetailsContainer> getPlaceDetails(@Query("place_id") String placeId);
 
 
     public static final Retrofit retrofit = new Retrofit.Builder()

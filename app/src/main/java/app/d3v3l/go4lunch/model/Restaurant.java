@@ -5,6 +5,7 @@ import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Photo;
 
 public class Restaurant {
 
+    private String placeId;
     private String name;
     private String address;
     private Double latitude;
@@ -13,7 +14,8 @@ public class Restaurant {
     private Photo photo;
 
 
-    public Restaurant(String name, String address, Double latitude, Double longitude, String distanceFromUser, Photo photo) {
+    public Restaurant(String placeId, String name, String address, Double latitude, Double longitude, String distanceFromUser, Photo photo) {
+        this.placeId = placeId;
         this.name = name;
         this.address = address;
         this.latitude = latitude;
@@ -22,6 +24,13 @@ public class Restaurant {
         this.photo = photo;
     }
 
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
+    }
 
     public String getName() {
         return name;

@@ -1,10 +1,11 @@
+
 package app.d3v3l.go4lunch.model.GoogleApiPlaces.placeDetails;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Container {
+public class DetailsContainer {
 
     @SerializedName("html_attributions")
     @Expose

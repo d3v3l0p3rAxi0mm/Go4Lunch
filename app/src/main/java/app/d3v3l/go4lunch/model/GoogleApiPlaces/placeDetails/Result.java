@@ -16,15 +16,12 @@ public class Result {
     @SerializedName("business_status")
     @Expose
     private String businessStatus;
-    @SerializedName("delivery")
-    @Expose
-    private Boolean delivery;
-    @SerializedName("dine_in")
-    @Expose
-    private Boolean dineIn;
     @SerializedName("formatted_address")
     @Expose
     private String formattedAddress;
+    @SerializedName("formatted_phone_number")
+    @Expose
+    private String formattedPhoneNumber;
     @SerializedName("geometry")
     @Expose
     private Geometry geometry;
@@ -37,9 +34,15 @@ public class Result {
     @SerializedName("icon_mask_base_uri")
     @Expose
     private String iconMaskBaseUri;
+    @SerializedName("international_phone_number")
+    @Expose
+    private String internationalPhoneNumber;
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("photos")
+    @Expose
+    private List<Photo> photos;
     @SerializedName("place_id")
     @Expose
     private String placeId;
@@ -48,22 +51,13 @@ public class Result {
     private PlusCode plusCode;
     @SerializedName("rating")
     @Expose
-    private Integer rating;
+    private Double rating;
     @SerializedName("reference")
     @Expose
     private String reference;
     @SerializedName("reviews")
     @Expose
     private List<Review> reviews;
-    @SerializedName("serves_beer")
-    @Expose
-    private Boolean servesBeer;
-    @SerializedName("serves_lunch")
-    @Expose
-    private Boolean servesLunch;
-    @SerializedName("serves_wine")
-    @Expose
-    private Boolean servesWine;
     @SerializedName("types")
     @Expose
     private List<String> types;
@@ -79,6 +73,12 @@ public class Result {
     @SerializedName("vicinity")
     @Expose
     private String vicinity;
+    @SerializedName("website")
+    @Expose
+    private String website;
+    @SerializedName("wheelchair_accessible_entrance")
+    @Expose
+    private Boolean wheelchairAccessibleEntrance;
 
     public List<AddressComponent> getAddressComponents() {
         return addressComponents;
@@ -104,28 +104,20 @@ public class Result {
         this.businessStatus = businessStatus;
     }
 
-    public Boolean getDelivery() {
-        return delivery;
-    }
-
-    public void setDelivery(Boolean delivery) {
-        this.delivery = delivery;
-    }
-
-    public Boolean getDineIn() {
-        return dineIn;
-    }
-
-    public void setDineIn(Boolean dineIn) {
-        this.dineIn = dineIn;
-    }
-
     public String getFormattedAddress() {
         return formattedAddress;
     }
 
     public void setFormattedAddress(String formattedAddress) {
         this.formattedAddress = formattedAddress;
+    }
+
+    public String getFormattedPhoneNumber() {
+        return formattedPhoneNumber;
+    }
+
+    public void setFormattedPhoneNumber(String formattedPhoneNumber) {
+        this.formattedPhoneNumber = formattedPhoneNumber;
     }
 
     public Geometry getGeometry() {
@@ -160,12 +152,28 @@ public class Result {
         this.iconMaskBaseUri = iconMaskBaseUri;
     }
 
+    public String getInternationalPhoneNumber() {
+        return internationalPhoneNumber;
+    }
+
+    public void setInternationalPhoneNumber(String internationalPhoneNumber) {
+        this.internationalPhoneNumber = internationalPhoneNumber;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
     }
 
     public String getPlaceId() {
@@ -184,11 +192,11 @@ public class Result {
         this.plusCode = plusCode;
     }
 
-    public Integer getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 
@@ -206,30 +214,6 @@ public class Result {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
-    }
-
-    public Boolean getServesBeer() {
-        return servesBeer;
-    }
-
-    public void setServesBeer(Boolean servesBeer) {
-        this.servesBeer = servesBeer;
-    }
-
-    public Boolean getServesLunch() {
-        return servesLunch;
-    }
-
-    public void setServesLunch(Boolean servesLunch) {
-        this.servesLunch = servesLunch;
-    }
-
-    public Boolean getServesWine() {
-        return servesWine;
-    }
-
-    public void setServesWine(Boolean servesWine) {
-        this.servesWine = servesWine;
     }
 
     public List<String> getTypes() {
@@ -270,6 +254,22 @@ public class Result {
 
     public void setVicinity(String vicinity) {
         this.vicinity = vicinity;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public Boolean getWheelchairAccessibleEntrance() {
+        return wheelchairAccessibleEntrance;
+    }
+
+    public void setWheelchairAccessibleEntrance(Boolean wheelchairAccessibleEntrance) {
+        this.wheelchairAccessibleEntrance = wheelchairAccessibleEntrance;
     }
 
 }

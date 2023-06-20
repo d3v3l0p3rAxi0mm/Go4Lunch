@@ -62,11 +62,12 @@ public class Result {
     private String distanceFromUser;
 
 
-    public Result(String name, Geometry geometry, String vicinity, String distanceFromUser) {
+    public Result(String placeId, String name, Geometry geometry, String vicinity, String distanceFromUser) {
         this.name = name;
         this.geometry = geometry;
         this.vicinity = vicinity;
         this.distanceFromUser = distanceFromUser;
+        this.placeId = placeId;
     }
 
 

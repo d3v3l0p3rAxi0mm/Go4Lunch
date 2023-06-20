@@ -1,11 +1,14 @@
 package app.d3v3l.go4lunch.ui;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -55,6 +58,7 @@ public class ListRestaurantAdapter extends RecyclerView.Adapter<ListRestaurantAd
         }
 
         public void bindView(Restaurant result, int position) {
+            String placeId = result.getPlaceId();
             String name = "[" + position + "] " + result.getName();
             b.NameTextView.setText(name);
             b.AddressTextView.setText(result.getAddress());
@@ -72,7 +76,8 @@ public class ListRestaurantAdapter extends RecyclerView.Adapter<ListRestaurantAd
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(b.itemRestaurant.getContext(), RestaurantDetailsActivity.class);
-                    b.itemRestaurant.getContext().startActivity(intent);
+                    intent.putExtra("PLACEID", result.getPlaceId());
+                    v.getContext().startActivity(intent);
                 }
             });
 

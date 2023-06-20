@@ -32,5 +32,6 @@
     <string name="call">call</string>
     <string name="like">like</string>
     <string name="website">website</string>
+    <string name="back">back</string>
 
 </resources>

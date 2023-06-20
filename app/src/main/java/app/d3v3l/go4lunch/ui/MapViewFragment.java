@@ -4,6 +4,8 @@ import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
+import static app.d3v3l.go4lunch.Utils.LocationUtils.getBoundsFromLatLng;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -43,6 +45,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.RectangularBounds;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
@@ -53,6 +56,7 @@ import com.google.maps.android.SphericalUtil;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -159,12 +163,11 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
         inflater.inflate(R.menu.activity_home_topmenu, menu);
+        /*
         MenuItem item = menu.findItem(R.id.actionSearch);
-
-/*        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -185,10 +188,14 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
 
     public void onSearchCalled() {
         // Set the fields to specify which types of place data to return.
-        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
+        List<Place.Field> fields = Arrays.asList(Place.Field.ID);
         // Start the autocomplete intent.
+        ArrayList<String> typeOfSearch = new ArrayList<String>();
+        typeOfSearch.add("restaurant");
         Intent intent = new Autocomplete.IntentBuilder(
-                AutocompleteActivityMode.OVERLAY, fields).setCountry("NG") //NIGERIA
+                AutocompleteActivityMode.OVERLAY, fields)
+                .setTypesFilter(typeOfSearch)
+                .setLocationBias(getBoundsFromLatLng(myLocation, 50000))
                 .build(getActivity());
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
     }
@@ -198,15 +205,13 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
-                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId() + ", " + place.getAddress());
-                Toast.makeText(getContext(), "ID: " + place.getId() + "address:" + place.getAddress() + "Name:" + place.getName() + " latlong: " + place.getLatLng(), Toast.LENGTH_LONG).show();
-                String address = place.getAddress();
-                // do query with address
+                Intent intent = new Intent(getActivity(), RestaurantDetailsActivity.class);
+                intent.putExtra("PLACEID", place.getId());
+                startActivity(intent);
 
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 Status status = Autocomplete.getStatusFromIntent(data);
-                Toast.makeText(getContext(), "Error: " + status.getStatusMessage(), Toast.LENGTH_LONG).show();
                 Log.i(TAG, status.getStatusMessage());
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
@@ -230,7 +235,6 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
 
     // Execute HTTP request and update UI
     private void executeHttpRequestInMapWithRetrofit(){
-        Log.d("MyLocation in MapView", myLocation.toString());
         PlaceCalls.fetchRestaurants(this, myLocation.latitude + "," + myLocation.longitude);
     }
 

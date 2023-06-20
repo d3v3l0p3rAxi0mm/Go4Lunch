@@ -1,3 +1,4 @@
+
 package app.d3v3l.go4lunch.model.GoogleApiPlaces.placeDetails;
 
 import java.util.List;

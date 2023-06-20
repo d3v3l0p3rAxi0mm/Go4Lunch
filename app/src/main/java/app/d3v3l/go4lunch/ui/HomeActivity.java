@@ -32,8 +32,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ActivityHomeBinding b;
     private UserManager userManager = null;
     private GoogleMap mMap;
-    //private final ListViewFragment listViewFragment = ListViewFragment.newInstance();
-    //private List<Restaurant> mRestaurants = new ArrayList<>();
 
 
     @Override
