@@ -1,7 +1,13 @@
 package app.d3v3l.go4lunch.ui;
 
+import static android.content.ContentValues.TAG;
+
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,16 +17,25 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import app.d3v3l.go4lunch.BuildConfig;
 import app.d3v3l.go4lunch.R;
@@ -66,6 +81,71 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             if (idRessource == R.id.activity_home_drawer_logout) {
                 userManager.signOut(this).addOnSuccessListener(aVoid -> finish());
             }
+            else if (idRessource== R.id.activity_home_drawer_your_lunch) {
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                String uid = userManager.getCurrentUser().getUid();
+                Date date_of_today = new Date();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                String stringDate= format.format(date_of_today);
+
+                db.collection("restaurants")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, document.getId() + " => " + document.getData());
+                                        String placeId = document.getId();
+                                        String name = document.getData().get("name").toString();
+                                        Log.d("NameResto", name);
+
+                                        db.collection("restaurants").document(placeId).collection("usersOn" + stringDate)
+                                                .get()
+                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            for (QueryDocumentSnapshot userDocument : task.getResult()) {
+
+                                                                if (uid.equals(userDocument.getData().get("uid").toString())) {
+                                                                    Log.d("CheckMatch", "YES");
+                                                                    extracted(placeId);
+
+                                                                }
+                                                            }
+                                                        } else {
+                                                            Log.d(TAG, "Error getting documents: ", task.getException());
+                                                        }
+                                                    }
+
+
+                                                });
+
+
+
+
+
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+
+
+                //TODO link to my lunch
+
+
+
+            } else if (idRessource == R.id.activity_home_drawer_settings) {
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                startActivity(intent);
+            }
             return true;
         });
 
@@ -80,6 +160,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         PlacesClient placesClient = Places.createClient(this);
 
     }
+
+    private void extracted(String placeId) {
+        Intent intent = new Intent(this, RestaurantDetailsActivity.class);
+        intent.putExtra("PLACEID", placeId);
+        startActivity(intent);
+    }
+
 
     @Override
     protected void onResume() {

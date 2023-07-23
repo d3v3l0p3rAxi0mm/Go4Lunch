@@ -39,6 +39,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -247,6 +248,8 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
         DecimalFormat df = new DecimalFormat("#.#");
         df.setRoundingMode(RoundingMode.HALF_UP);
 
+
+
         for (Result result : places.getResults()) {
 
             Map<String, Object> place = new HashMap<>();
@@ -267,11 +270,18 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
 
             LatLng coords = new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng());
 
-            googleMapGlobal.addMarker(new MarkerOptions()
+            MarkerOptions markerOptions = new MarkerOptions()
                     .position(coords)
                     .title(result.getName())
                     .snippet("Distance : " + distanceSimplified)
-                    .anchor(0.5f, 1));
+                    .anchor(0.5f, 1);
+
+            Marker marker = googleMapGlobal.addMarker(markerOptions);
+            marker.setTag(result.getPlaceId());
+
+
+            //TODO voir onClickListener sur le marker
+            // https://www.geeksforgeeks.org/how-to-add-onclicklistener-to-marker-on-google-maps-in-android/
 
             db.collection("restaurants").document(result.getPlaceId())
                     .set(place)
@@ -290,6 +300,30 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
 
         }
         googleMapGlobal.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(myLocation,10,0f,0f)));
+
+        // adding on click listener to marker of google maps.
+        /*googleMapGlobal.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+
+
+                // on marker click we are getting the title of our marker
+                // which is clicked and displaying it in a toast message.
+                //String markerName = marker.getTitle();
+                //Toast.makeText(getActivity(), "Clicked location is " + markerName, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });*/
+
+        googleMapGlobal.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(@NonNull Marker marker) {
+                Intent intent = new Intent(getActivity(), RestaurantDetailsActivity.class);
+                intent.putExtra("PLACEID", marker.getTag().toString());
+                startActivity(intent);
+            }
+        });
 
     }
 

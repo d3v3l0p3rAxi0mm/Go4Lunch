@@ -92,7 +92,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
         b.back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
 
