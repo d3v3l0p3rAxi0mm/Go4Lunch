@@ -32,6 +32,8 @@ import com.google.firebase.firestore.AggregateQuery;
 import com.google.firebase.firestore.AggregateQuerySnapshot;
 import com.google.firebase.firestore.AggregateSource;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -133,7 +135,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
 
                 FirebaseUser user = userManager.getCurrentUser();
 
-
+                Log.d(TAG,user.getUid());
 
                 // request to determine if user has already selected this restaurant
                 Query query = db.collection("restaurants").document(placeId).collection("usersOn" + stringDate).whereEqualTo("uid", user.getUid());
@@ -151,6 +153,59 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
                                 // Access a Firestore instance
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+                                // if user joined another restaurant, we find its Id
+                                DocumentReference docRef = db.collection("history").document(stringDate).collection("users").document(user.getUid());
+                                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+                                                //delete user record for this restaurant
+                                                db.collection("restaurants").document(document.getData().get("placeId").toString()).collection("usersOn" + stringDate).document(user.getUid())
+                                                        .delete()
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                /*//Delete all history daily entries for this user
+                                                                db.collection("history").document(stringDate).collection("users").document(user.getUid())
+                                                                        .delete()
+                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                            @Override
+                                                                            public void onSuccess(Void aVoid) {
+
+                                                                            }
+                                                                        })
+                                                                        .addOnFailureListener(new OnFailureListener() {
+                                                                            @Override
+                                                                            public void onFailure(@NonNull Exception e) {
+
+                                                                            }
+                                                                        });*/
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                Log.w(TAG, "Error deleting document", e);
+                                                            }
+                                                        });
+
+                                            } else {
+                                                Log.d(TAG, "No such document");
+
+                                            }
+                                        } else {
+                                            Log.d(TAG, "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+
+
+
+
+                                // Add user in the restaurant joiners list
                                 Map<String, Object> users = new HashMap<>();
                                 users.put("uid", user.getUid());
                                 users.put("username", user.getDisplayName());
@@ -161,7 +216,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                // Add an entry in History collection
+                                                // add an entry in History collection
                                                 Map<String, Object> lunch = new HashMap<>();
                                                 lunch.put("placeId", placeId);
                                                 db.collection("history").document(stringDate).collection("users").document(user.getUid())

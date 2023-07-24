@@ -164,9 +164,19 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.isEmpty()) {
-                    //executeHttpRequestWithRetrofit();
+                    executeHttpRequestInListViewWithRetrofit();
+                } else {
+                    if (newText.length() >= 3) {
+                        List<Restaurant> mNewRestaurants = new ArrayList<>();
+                        Log.d(TAG, "search pris en compte");
+                        for (Restaurant resto : mRestaurants) {
+                            if (resto.getName().contains(newText) || resto.getAddress().contains(newText)) {
+                                mNewRestaurants.add(resto);
+                            }
+                        }
+                        mRecyclerView.setAdapter(new ListRestaurantAdapter(mNewRestaurants));
+                    }
                 }
-                //executeHttpRequestWithRetrofitAutocomplete(newText);
                 return true;
             }
         });

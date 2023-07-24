@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -25,11 +26,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -83,54 +88,29 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             }
             else if (idRessource== R.id.activity_home_drawer_your_lunch) {
 
+
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 String uid = userManager.getCurrentUser().getUid();
                 Date date_of_today = new Date();
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 String stringDate= format.format(date_of_today);
 
-                db.collection("restaurants")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.d(TAG, document.getId() + " => " + document.getData());
-                                        String placeId = document.getId();
-                                        String name = document.getData().get("name").toString();
-                                        Log.d("NameResto", name);
-
-                                        db.collection("restaurants").document(placeId).collection("usersOn" + stringDate)
-                                                .get()
-                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                        if (task.isSuccessful()) {
-                                                            for (QueryDocumentSnapshot userDocument : task.getResult()) {
-
-                                                                if (uid.equals(userDocument.getData().get("uid").toString())) {
-                                                                    Log.d("CheckMatch", "YES");
-                                                                    extracted(placeId);
-
-                                                                }
-                                                            }
-                                                        } else {
-                                                            Log.d(TAG, "Error getting documents: ", task.getException());
-                                                        }
-                                                    }
-
-
-                                                });
-                                    }
-                                } else {
-                                    Log.d(TAG, "Error getting documents: ", task.getException());
-                                }
+                DocumentReference docRef = db.collection("history").document(stringDate).collection("users").document(uid);
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        String placeId = null;
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                placeId = document.getData().get("placeId").toString();
+                                extracted(placeId);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "You haven't decided for your lunch yet !", Toast.LENGTH_SHORT).show();
                             }
-                        });
-
-
-                //TODO link to my lunch
+                        }
+                    }
+                });
 
 
 

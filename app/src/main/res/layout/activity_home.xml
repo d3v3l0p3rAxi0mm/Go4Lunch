@@ -10,11 +10,12 @@
     tools:openDrawer="start"
     tools:context=".ui.HomeActivity">
 
-    <androidx.fragment.app.FragmentContainerView
+    <!--<androidx.fragment.app.FragmentContainerView
         android:id="@+id/autoCompleteFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment" />
+        -->
 
     <LinearLayout
         android:layout_width="match_parent"
