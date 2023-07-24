@@ -86,6 +86,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             if (idRessource == R.id.activity_home_drawer_logout) {
                 userManager.signOut(this).addOnSuccessListener(aVoid -> finish());
             }
+            else if (idRessource== R.id.activity_home_drawer_favorite) {
+                Toast.makeText(getApplicationContext(), "This feature is coming soon !!!", Toast.LENGTH_SHORT).show();
+            }
             else if (idRessource== R.id.activity_home_drawer_your_lunch) {
 
 

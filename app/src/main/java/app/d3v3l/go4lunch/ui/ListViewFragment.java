@@ -164,13 +164,13 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.isEmpty()) {
-                    executeHttpRequestInListViewWithRetrofit();
+                    mRecyclerView.setAdapter(new ListRestaurantAdapter(mRestaurants));
                 } else {
-                    if (newText.length() >= 3) {
+                    if (newText.length() >= 1) {
                         List<Restaurant> mNewRestaurants = new ArrayList<>();
                         Log.d(TAG, "search pris en compte");
                         for (Restaurant resto : mRestaurants) {
-                            if (resto.getName().contains(newText) || resto.getAddress().contains(newText)) {
+                            if (resto.getName().toLowerCase().contains(newText.toLowerCase()) || resto.getAddress().toLowerCase().contains(newText.toLowerCase())) {
                                 mNewRestaurants.add(resto);
                             }
                         }

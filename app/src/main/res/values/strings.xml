@@ -33,5 +33,7 @@
     <string name="like">like</string>
     <string name="website">website</string>
     <string name="back">back</string>
+    <string name="submit">submit</string>
+    <string name="give_a_score_to_this_restaurant">Give a score to this Restaurant !!</string>
 
 </resources>

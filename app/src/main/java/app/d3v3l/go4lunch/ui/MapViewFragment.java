@@ -68,7 +68,9 @@ import app.d3v3l.go4lunch.Utils.PlaceCalls;
 import app.d3v3l.go4lunch.databinding.ActivityHomeBinding;
 import app.d3v3l.go4lunch.databinding.FragmentMapViewBinding;
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Container;
+import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Photo;
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Result;
+import app.d3v3l.go4lunch.model.Restaurant;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,6 +83,7 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
     private FragmentMapViewBinding b;
     private GoogleMap googleMapGlobal;
     private LatLng myLocation;
+    private List<Restaurant> mRestaurants = new ArrayList<>();
     private final int AUTOCOMPLETE_REQUEST_CODE = 0;
 
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -173,13 +176,24 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
+
+                googleMapGlobal.clear();
+
                 if (newText.isEmpty()) {
-                    //executeHttpRequestWithRetrofit();
+                    displayAutoCompleteResults(mRestaurants);
+                } else {
+                    if (newText.length() >= 1) {
+                        List<Restaurant> mNewRestaurants = new ArrayList<>();
+                        for (Restaurant resto : mRestaurants) {
+                            if (resto.getName().toLowerCase().contains(newText.toLowerCase()) || resto.getAddress().toLowerCase().contains(newText.toLowerCase())) {
+                                mNewRestaurants.add(resto);
+                            }
+                        }
+                        displayAutoCompleteResults(mNewRestaurants);
+                    }
                 }
-                //executeHttpRequestWithRetrofitAutocomplete(newText);
                 return true;
             }
         });
@@ -247,7 +261,7 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
         DecimalFormat df = new DecimalFormat("#.#");
         df.setRoundingMode(RoundingMode.HALF_UP);
 
-
+        mRestaurants.clear();
 
         for (Result result : places.getResults()) {
 
@@ -257,6 +271,9 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
             place.put("address", result.getVicinity());
             place.put("latitude", result.getGeometry().getLocation().getLat());
             place.put("longitude", result.getGeometry().getLocation().getLng());
+
+            Photo p = new Photo();
+            this.mRestaurants.add(new Restaurant(result.getPlaceId(), result.getName(), result.getVicinity(), result.getGeometry().getLocation().getLat(),result.getGeometry().getLocation().getLng(),result.getDistanceFromUser(),p));
 
             Double distance = SphericalUtil.computeDistanceBetween(myLocation,new LatLng(result.getGeometry().getLocation().getLat(),result.getGeometry().getLocation().getLng()));
             String distanceSimplified;
@@ -325,6 +342,70 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
         });
 
     }
+
+
+    public void displayAutoCompleteResults(List<Restaurant> restaurants) {
+
+        DecimalFormat df = new DecimalFormat("#.#");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
+        for (Restaurant resto : restaurants) {
+
+            Map<String, Object> place = new HashMap<>();
+            place.put("place_id", resto.getPlaceId());
+            place.put("name", resto.getName());
+            place.put("address", resto.getAddress());
+            place.put("latitude", resto.getLatitude());
+            place.put("longitude", resto.getLongitude());
+
+            Double distance = SphericalUtil.computeDistanceBetween(myLocation,new LatLng(resto.getLatitude(),resto.getLongitude()));
+            String distanceSimplified;
+            if (distance>=1000) {
+                distance = distance /1000;
+                distanceSimplified = df.format(distance) + " km";
+            } else {
+                distanceSimplified = distance.intValue() + " m";
+            }
+
+            LatLng coords = new LatLng(resto.getLatitude(), resto.getLongitude());
+
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(coords)
+                    .title(resto.getName())
+                    .snippet("Distance : " + distanceSimplified)
+                    .anchor(0.5f, 1);
+
+            Marker marker = googleMapGlobal.addMarker(markerOptions);
+            marker.setTag(resto.getPlaceId());
+
+        }
+        googleMapGlobal.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(myLocation,10,0f,0f)));
+
+
+        googleMapGlobal.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(@NonNull Marker marker) {
+                Intent intent = new Intent(getActivity(), RestaurantDetailsActivity.class);
+                intent.putExtra("PLACEID", marker.getTag().toString());
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
 
 
     @Override

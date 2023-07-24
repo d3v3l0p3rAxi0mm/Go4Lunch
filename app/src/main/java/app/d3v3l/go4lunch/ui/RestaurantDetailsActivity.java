@@ -17,7 +17,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -67,6 +69,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
 
     private String stringDate;
 
+    RatingBar ratingBar;
+
     private boolean isUserHasJoined;
 
 
@@ -98,6 +102,12 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
             }
         });
 
+        RatingBar simpleRatingBar = b.ratingBar; // initiate a rating bar
+        simpleRatingBar.setRating((float) 2.5); // set default rating
+
+        ratingBar = b.rating; // initiate a rating bar
+        ratingBar.setRating((float) 2.5); // set default rating
+
         setRecyclerView();
 
     }
@@ -126,6 +136,25 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
                 } else {
                     Log.d(TAG, "Count failed: ", task.getException());
                 }
+            }
+        });
+
+        b.ratingBar.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    Log.d(TAG,"Click on ratingBar");
+                    b.notationLayout.setVisibility(View.VISIBLE);
+                }
+                return true;
+            }
+        });
+
+        b.submitScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG,"Your rating is " + ratingBar.getRating());
+                b.notationLayout.setVisibility(View.GONE);
             }
         });
 

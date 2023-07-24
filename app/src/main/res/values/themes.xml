@@ -25,5 +25,9 @@
         <item name="colorControlNormal">@color/white</item>
         <item name="colorControlActivated">#FFEB3B</item>
     </style>
+    <style name="RatingBarRestaurantBig" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">#FFEB3B</item>
+    </style>
 
 </resources>

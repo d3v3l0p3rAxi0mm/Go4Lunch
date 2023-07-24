@@ -59,7 +59,7 @@ public class ListRestaurantAdapter extends RecyclerView.Adapter<ListRestaurantAd
 
         public void bindView(Restaurant result, int position) {
             String placeId = result.getPlaceId();
-            String name = "[" + position + "] " + result.getName();
+            String name = result.getName();
             b.NameTextView.setText(name);
             b.AddressTextView.setText(result.getAddress());
             b.DistanceTextView.setText(result.getDistanceFromUser());
