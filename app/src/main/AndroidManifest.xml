@@ -44,10 +44,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity"></activity>
+        <activity android:name=".ui.MainActivity">
+        </activity>
         <activity
             android:name=".ui.HomeActivity"
-            android:exported="false"></activity>
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".ui.BaseActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".ui.permissions.LocationPermissionActivity"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>

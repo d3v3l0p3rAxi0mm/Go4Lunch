@@ -133,6 +133,9 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
 
                 FirebaseUser user = userManager.getCurrentUser();
 
+
+
+                // request to determine if user has already selected this restaurant
                 Query query = db.collection("restaurants").document(placeId).collection("usersOn" + stringDate).whereEqualTo("uid", user.getUid());
                 AggregateQuery countQuery = query.count();
                 countQuery.get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
@@ -143,6 +146,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
                             AggregateQuerySnapshot snapshot = task.getResult();
                             Log.d(TAG, "Count: " + snapshot.getCount());
 
+                            // User hasn't choose this restaurant
                             if (snapshot.getCount()==0) {
                                 // Access a Firestore instance
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -157,9 +161,24 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                Log.d(TAG, "DocumentSnapshot successfully written!");
-                                                b.floatingOkBtn.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green, getTheme())));
-
+                                                // Add an entry in History collection
+                                                Map<String, Object> lunch = new HashMap<>();
+                                                lunch.put("placeId", placeId);
+                                                db.collection("history").document(stringDate).collection("users").document(user.getUid())
+                                                        .set(lunch)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                b.floatingOkBtn.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green, getTheme())));
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                Log.w(TAG, "Error writing document", e);
+                                                                //TODO Remove document in usersOn{today} of the current Restaurant
+                                                            }
+                                                        });
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
@@ -168,14 +187,30 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
                                                 Log.w(TAG, "Error writing document", e);
                                             }
                                         });
+
+
+
+                            // User has already choose this restaurant => delete datas
                             } else {
                                 db.collection("restaurants").document(placeId).collection("usersOn" + stringDate).document(user.getUid())
                                         .delete()
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                                b.floatingOkBtn.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.grey, getTheme())));
+                                                db.collection("history").document(stringDate).collection("users").document(user.getUid())
+                                                        .delete()
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                b.floatingOkBtn.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.grey, getTheme())));
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                //TODO recreate user in collection usersOn{today} of current restaurant
+                                                            }
+                                                        });
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {

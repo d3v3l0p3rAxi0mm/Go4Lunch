@@ -42,7 +42,7 @@ import app.d3v3l.go4lunch.R;
 import app.d3v3l.go4lunch.databinding.ActivityHomeBinding;
 import app.d3v3l.go4lunch.manager.UserManager;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityHomeBinding b;
     private UserManager userManager = null;
@@ -122,11 +122,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
                                                 });
-
-
-
-
-
                                     }
                                 } else {
                                     Log.d(TAG, "Error getting documents: ", task.getException());

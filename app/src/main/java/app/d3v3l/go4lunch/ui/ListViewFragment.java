@@ -134,7 +134,7 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.actionSearch:
-                onSearchCalled();
+                //onSearchCalled();
                 return true;
             default:
                 return false;
@@ -152,7 +152,6 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
         inflater.inflate(R.menu.activity_home_topmenu, menu);
-        /*
         MenuItem item = menu.findItem(R.id.actionSearch);
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
         SearchView searchView = (SearchView) item.getActionView();
@@ -171,10 +170,9 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
                 return true;
             }
         });
-        */
     }
 
-    public void onSearchCalled() {
+/*    public void onSearchCalled() {
         // Set the fields to specify which types of place data to return.
         List<Place.Field> fields = Arrays.asList(Place.Field.ID);
         // Start the autocomplete intent.
@@ -186,8 +184,9 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
                 .setLocationBias(getBoundsFromLatLng(myLocation, 50000))
                 .build(getActivity());
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
-    }
+    }*/
 
+/*
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
@@ -205,7 +204,7 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
                 // The user canceled the operation.
             }
         }
-    }
+    }*/
 
 
     // Configure RecyclerView
