@@ -270,7 +270,7 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(coords)
                     .title(result.getName())
-                    .snippet(R.string.distance + " : " + distanceSimplified)
+                    .snippet(getResources().getString(R.string.distance) + " : " + distanceSimplified)
                     .anchor(0.5f, 1);
 
             Marker marker = googleMapGlobal.addMarker(markerOptions);
@@ -350,7 +350,7 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(coords)
                     .title(resto.getName())
-                    .snippet("Distance : " + distanceSimplified)
+                    .snippet(getResources().getString(R.string.distance) + distanceSimplified)
                     .anchor(0.5f, 1);
 
             Marker marker = googleMapGlobal.addMarker(markerOptions);
