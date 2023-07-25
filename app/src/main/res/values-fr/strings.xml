@@ -51,6 +51,7 @@
     <string name="distance">Distance</string>
 
     <string name="is_eating_at">déjeune à</string>
+    <string name="typename">Taper un nom, ville ou adresse</string>
 
 
 </resources>

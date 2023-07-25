@@ -26,6 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         checkForPermissions();
+        //TODO verifier les changements de config Android
     }
 
     private void checkForPermissions() {

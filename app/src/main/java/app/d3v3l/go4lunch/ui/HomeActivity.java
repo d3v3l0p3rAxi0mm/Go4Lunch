@@ -88,6 +88,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             }
             else if (idRessource== R.id.activity_home_drawer_favorite) {
                 Toast.makeText(getApplicationContext(), R.string.feature_coming_soon, Toast.LENGTH_SHORT).show();
+                //TODO create an activity with RecyclerVIEW
             }
             else if (idRessource== R.id.activity_home_drawer_your_lunch) {
 

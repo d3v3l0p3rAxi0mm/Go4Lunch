@@ -151,6 +151,7 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+        searchView.setQueryHint(getString(R.string.typename));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
