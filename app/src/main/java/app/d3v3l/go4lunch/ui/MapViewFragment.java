@@ -1,26 +1,11 @@
 package app.d3v3l.go4lunch.ui;
 
-import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
-
-import static app.d3v3l.go4lunch.Utils.LocationUtils.getBoundsFromLatLng;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,9 +13,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.google.android.gms.common.api.Status;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -43,29 +33,20 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-
 import com.google.android.gms.tasks.Task;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.RectangularBounds;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.maps.android.SphericalUtil;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import app.d3v3l.go4lunch.R;
 import app.d3v3l.go4lunch.Utils.PlaceCalls;
-import app.d3v3l.go4lunch.databinding.ActivityHomeBinding;
 import app.d3v3l.go4lunch.databinding.FragmentMapViewBinding;
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Container;
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Photo;
@@ -79,7 +60,6 @@ import app.d3v3l.go4lunch.model.Restaurant;
  */
 public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
 
-    private ActivityHomeBinding bHome;
     private FragmentMapViewBinding b;
     private GoogleMap googleMapGlobal;
     private LatLng myLocation;
@@ -133,7 +113,7 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
         //for SearchView
         setHasOptionsMenu(true);
         //change title of toolbar
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("I'm Hungry");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.iamhungry);
 
 
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null){
@@ -289,18 +269,15 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(coords)
                     .title(result.getName())
-                    .snippet("Distance : " + distanceSimplified)
+                    .snippet(R.string.distance + " : " + distanceSimplified)
                     .anchor(0.5f, 1);
 
             Marker marker = googleMapGlobal.addMarker(markerOptions);
             marker.setTag(result.getPlaceId());
 
 
-            //TODO voir onClickListener sur le marker
-            // https://www.geeksforgeeks.org/how-to-add-onclicklistener-to-marker-on-google-maps-in-android/
-
             db.collection("restaurants").document(result.getPlaceId())
-                    .set(place)
+                    .set(place, SetOptions.merge())
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

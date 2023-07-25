@@ -10,24 +10,22 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="description">description</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="error_not_connected">Vous devez vous connecter !</string>
-    <string name="error_authentication_canceled">Authentification annulée&#8230;</string>
-    <string name="error_no_internet">Aucune connexion internet !</string>
-    <string name="error_unknown_error">Une erreur inconnue s\'est produite&#8230;</string>
-    <string name="connection_succeed">Authentification réussie !</string>
+    <string name="error_not_connected">You need to log in !</string>
+    <string name="error_authentication_canceled">Authentification canceled&#8230;</string>
+    <string name="error_no_internet">No network !</string>
+    <string name="error_unknown_error">unknown error&#8230;</string>
+    <string name="connection_succeed">Authentification succeed !</string>
 
-    <string name="info_no_email_found">Auncune adresse email</string>
-    <string name="info_no_username_found">Aucun nom d\'utilisateur</string>
+    <string name="info_no_email_found">no email</string>
+    <string name="info_no_username_found">no user name</string>
 
     <string name="permission_denied_fine_location">Fine Location</string>
     <string name="permission_denied_coarse_location">Coarse Location</string>
     <string name="search">Search</string>
     <string name="avatar">avatar</string>
     <string name="separation">separation</string>
-    <string name="photo_du_restaurant">Photo du restaurant</string>
+    <string name="photo_du_restaurant">Restaurant photo</string>
     <string name="ok">ok</string>
     <string name="call">call</string>
     <string name="like">like</string>
@@ -35,5 +33,24 @@
     <string name="back">back</string>
     <string name="submit">submit</string>
     <string name="give_a_score_to_this_restaurant">Give a score to this Restaurant !!</string>
+    <string name="close">close</string>
+
+    <string name="feature_coming_soon">This feature is coming soon !!!</string>
+    <string name="lunch_not_choosen">You haven\'t decided for your lunch yet !</string>
+    <string name="has_not_decided">hasn\'t decided yet !</string>
+    <string name="iamhungry">I\'m Hungry !!!</string>
+    <string name="available_workmates">Available workmates"</string>
+    <string name="map_view">Map View</string>
+    <string name="list_view">List View</string>
+    <string name="workmates">Workmates</string>
+    <string name="your_lunch">YOUR LUNCH</string>
+    <string name="my_favorite_places">MY FAVORITE PLACES</string>
+    <string name="settings">SETTINGS</string>
+    <string name="logout">LOGOUT</string>
+
+    <string name="distance">Distance</string>
+
+    <string name="is_eating_at">is eating at</string>
+
 
 </resources>

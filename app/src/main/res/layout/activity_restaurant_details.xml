@@ -191,15 +191,37 @@
             android:stepSize=".5"
             android:theme="@style/RatingBarRestaurantBig" />
 
-        <Button
-            android:id="@+id/submitScore"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_gravity="center"
-            android:text="@string/submit"
-            android:backgroundTint="@color/DarkPrimary" />
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/submitScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:text="@string/submit"
+                android:backgroundTint="@color/DarkPrimary"
+                style="?android:attr/buttonBarButtonStyle" />
+            <Button
+                android:id="@+id/closeScoring"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center"
+                android:text="@string/close"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/black"
+                style="?android:attr/buttonBarButtonStyle" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

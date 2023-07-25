@@ -19,6 +19,7 @@ import com.google.firebase.firestore.Query;
 
 import java.util.Objects;
 
+import app.d3v3l.go4lunch.R;
 import app.d3v3l.go4lunch.databinding.FragmentWorkmatesBinding;
 import app.d3v3l.go4lunch.model.User;
 
@@ -58,7 +59,7 @@ public class WorkmatesFragment extends Fragment {
         // Inflate the layout for this fragment
 
         //change title of toolbar
-        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle("Available workmates");
+        Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setTitle(R.string.available_workmates);
 
         b = FragmentWorkmatesBinding.inflate(getLayoutInflater());
         setRecyclerView();
@@ -83,7 +84,7 @@ public class WorkmatesFragment extends Fragment {
                 .setQuery(query, User.class)
                 .build();
 
-        workmatesAdapter = new WorkmatesAdapter(options, Glide.with(this));
+        workmatesAdapter = new WorkmatesAdapter(options, Glide.with(this), getContext());
         recyclerViewWorkMates.setHasFixedSize(true);
         recyclerViewWorkMates.setAdapter(workmatesAdapter);
         recyclerViewWorkMates.setLayoutManager(new LinearLayoutManager(getContext()));

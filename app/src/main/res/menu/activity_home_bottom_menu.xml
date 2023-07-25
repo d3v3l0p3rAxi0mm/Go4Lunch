@@ -7,14 +7,14 @@
     <item
         android:id="@+id/mapViewButton"
         android:icon="@drawable/baseline_map_24"
-        android:title="Map View" />
+        android:title="@string/map_view" />
     <item
         android:id="@+id/listViewButton"
         android:icon="@drawable/baseline_view_list_24"
-        android:title="List View" />
+        android:title="@string/list_view" />
     <item
         android:id="@+id/workmatesButton"
         android:icon="@drawable/baseline_people_24"
-        android:title="Workmates" />
+        android:title="@string/workmates" />
 
 </menu>

@@ -87,7 +87,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 userManager.signOut(this).addOnSuccessListener(aVoid -> finish());
             }
             else if (idRessource== R.id.activity_home_drawer_favorite) {
-                Toast.makeText(getApplicationContext(), "This feature is coming soon !!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.feature_coming_soon, Toast.LENGTH_SHORT).show();
             }
             else if (idRessource== R.id.activity_home_drawer_your_lunch) {
 
@@ -109,7 +109,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                                 placeId = document.getData().get("placeId").toString();
                                 extracted(placeId);
                             } else {
-                                Toast.makeText(getApplicationContext(), "You haven't decided for your lunch yet !", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), R.string.lunch_not_choosen, Toast.LENGTH_SHORT).show();
                             }
                         }
                     }

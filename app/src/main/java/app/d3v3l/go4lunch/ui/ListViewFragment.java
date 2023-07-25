@@ -101,8 +101,6 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
     @Override
     public void onResume() {
         super.onResume();
-        //mRecyclerView.setAdapter(new ListRestaurantAdapter(mRestaurants));
-        //mRecyclerView.getAdapter().notifyDataSetChanged();
         SearchMyPositionThenPlacesNearby();
     }
 
@@ -124,7 +122,7 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
         //for SearchView
         setHasOptionsMenu(true);
         //change title of toolbar
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("I'm Hungry");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.iamhungry);
 
         return b.getRoot();
     }
@@ -181,41 +179,6 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
             }
         });
     }
-
-/*    public void onSearchCalled() {
-        // Set the fields to specify which types of place data to return.
-        List<Place.Field> fields = Arrays.asList(Place.Field.ID);
-        // Start the autocomplete intent.
-        ArrayList<String> typeOfSearch = new ArrayList<String>();
-        typeOfSearch.add("restaurant");
-        Intent intent = new Autocomplete.IntentBuilder(
-                AutocompleteActivityMode.OVERLAY, fields)
-                .setTypesFilter(typeOfSearch)
-                .setLocationBias(getBoundsFromLatLng(myLocation, 50000))
-                .build(getActivity());
-        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
-    }*/
-
-/*
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                Place place = Autocomplete.getPlaceFromIntent(data);
-                Intent intent = new Intent(getActivity(), RestaurantDetailsActivity.class);
-                intent.putExtra("PLACEID", place.getId());
-                startActivity(intent);
-
-            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                // TODO: Handle the error.
-                Status status = Autocomplete.getStatusFromIntent(data);
-                Log.i(TAG, status.getStatusMessage());
-            } else if (resultCode == RESULT_CANCELED) {
-                // The user canceled the operation.
-            }
-        }
-    }*/
-
 
     // Configure RecyclerView
     private void configureRecyclerView(View view){

@@ -2,9 +2,7 @@ package app.d3v3l.go4lunch.ui;
 
 import static android.content.ContentValues.TAG;
 
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
-
-import android.content.res.ColorStateList;
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -17,18 +15,13 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.AggregateQuery;
-import com.google.firebase.firestore.AggregateQuerySnapshot;
-import com.google.firebase.firestore.AggregateSource;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
 
 import app.d3v3l.go4lunch.R;
 import app.d3v3l.go4lunch.databinding.WorkmateItemBinding;
@@ -41,14 +34,16 @@ public class WorkmatesAdapter extends FirestoreRecyclerAdapter<User, WorkmatesAd
     // *********************************************************************************************
 
     private final RequestManager glide;
+    private final Context context;
 
     /**
      * Create constructor
      * @param options set Model and Queries
      * @param glide requestManager for glide (image management)
      */
-    public WorkmatesAdapter(FirestoreRecyclerOptions<User> options, RequestManager glide) {
+    public WorkmatesAdapter(FirestoreRecyclerOptions<User> options, RequestManager glide, Context context) {
         super(options);
+        this.context = context;
         this.glide = glide;
     }
 
@@ -57,7 +52,7 @@ public class WorkmatesAdapter extends FirestoreRecyclerAdapter<User, WorkmatesAd
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         WorkmateItemBinding workmateItemBinding = WorkmateItemBinding.inflate(layoutInflater, parent, false);
-        return new ViewHolder(workmateItemBinding);
+        return new ViewHolder(workmateItemBinding, context);
     }
 
 
@@ -82,9 +77,12 @@ public class WorkmatesAdapter extends FirestoreRecyclerAdapter<User, WorkmatesAd
         private final WorkmateItemBinding b;
         private final FirebaseFirestore db = FirebaseFirestore.getInstance();
         private String stringDate;
+        private final Context context;
 
-        public ViewHolder(WorkmateItemBinding workmateItemBinding) {
+
+        public ViewHolder(WorkmateItemBinding workmateItemBinding, Context context) {
             super(workmateItemBinding.getRoot());
+            this.context = context;
             b = workmateItemBinding;
         }
 
@@ -92,51 +90,45 @@ public class WorkmatesAdapter extends FirestoreRecyclerAdapter<User, WorkmatesAd
 
             String uid = user.getUid();
             Date date_of_today = new Date();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
             this.stringDate= format.format(date_of_today);
 
-            b.workmatesName.setText(user.getUsername() + " hasn't decided yet !");
+            String s = user.getUsername() + " " + context.getResources().getString(R.string.has_not_decided);
+            b.workmatesName.setText(s);
 
             db.collection("restaurants")
                     .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.d(TAG, document.getId() + " => " + document.getData());
-                                    String placeId = document.getId();
-                                    String name = document.getData().get("name").toString();
-                                    Log.d("NameResto", name);
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                String placeId = document.getId();
+                                String name = Objects.requireNonNull(document.getData().get("name")).toString();
 
-                                    db.collection("restaurants").document(placeId).collection("usersOn" + stringDate)
-                                            .get()
-                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                    if (task.isSuccessful()) {
-                                                        for (QueryDocumentSnapshot userDocument : task.getResult()) {
-                                                            Log.d("UIDUser", uid + " = " + userDocument.getData().get("uid").toString() + " ? ");
-                                                            if (uid.equals(userDocument.getData().get("uid").toString())) {
-                                                                Log.d("CheckMatch", "YES");
-                                                                b.workmatesName.setText(user.getUsername() + " is eating at " + name);
-                                                                b.workmatesName.setTextColor(ContextCompat.getColor(b.workmatesName.getContext(), R.color.black));
-                                                            }
-                                                        }
-                                                    } else {
-                                                        Log.d(TAG, "Error getting documents: ", task.getException());
+                                db.collection("restaurants").document(placeId).collection("usersOn" + stringDate)
+                                        .get()
+                                        .addOnCompleteListener(task1 -> {
+                                            if (task1.isSuccessful()) {
+                                                for (QueryDocumentSnapshot userDocument : task1.getResult()) {
+                                                    if (uid.equals(Objects.requireNonNull(userDocument.getData().get("uid")).toString())) {
+                                                        String d = context.getResources().getString(R.string.is_eating_at);
+                                                        String s1 = user.getUsername() + " " + d + " " + name;
+                                                        b.workmatesName.setText(s1);
+                                                        b.workmatesName.setTextColor(ContextCompat.getColor(b.workmatesName.getContext(), R.color.black));
                                                     }
                                                 }
-                                            });
+                                            } else {
+                                                Log.d(TAG, "Error getting documents: ", task1.getException());
+                                            }
+                                        });
 
 
 
 
 
-                                }
-                            } else {
-                                Log.d(TAG, "Error getting documents: ", task.getException());
                             }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     });
 

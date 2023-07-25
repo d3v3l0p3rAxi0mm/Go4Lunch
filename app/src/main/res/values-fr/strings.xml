@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Go4Lunch</string>
+    <string name="baseLine">Trouve un restaurant et invite tes collègues à déjeuner</string>
+    <string name="signInWithGoogle">Connexion avec Google</string>
+    <string name="signInWithEmail">Connexion avec email</string>
+    <string name="opacityimagefilter">Filtre d\'opacité</string>
+    <string name="home_screen">Ecran d\'accueil</string>
+    <string name="go4lunch_logo">Go4Lunch Logo</string>
+
+    <string name="navigation_drawer_open">Ouvre le drawer de navigation</string>
+    <string name="navigation_drawer_close">ferme le drawer de navigation</string>
+    <string name="description">description</string>
+
+    <string name="error_not_connected">Vous devez vous connecter !</string>
+    <string name="error_authentication_canceled">Authentification annulée&#8230;</string>
+    <string name="error_no_internet">Aucune connexion internet !</string>
+    <string name="error_unknown_error">Une erreur inconnue s\'est produite&#8230;</string>
+    <string name="connection_succeed">Authentification réussie !</string>
+
+    <string name="info_no_email_found">Auncune adresse email</string>
+    <string name="info_no_username_found">Aucun nom d\'utilisateur</string>
+
+    <string name="permission_denied_fine_location">Localisation fine</string>
+    <string name="permission_denied_coarse_location">Localisation par triangularisation</string>
+    <string name="search">recherche</string>
+    <string name="avatar">avatar</string>
+    <string name="separation">separation</string>
+    <string name="photo_du_restaurant">Photo du restaurant</string>
+    <string name="ok">ok</string>
+    <string name="call">appel</string>
+    <string name="like">j\'aime</string>
+    <string name="website">site web</string>
+    <string name="back">retour</string>
+    <string name="submit">envoyer</string>
+    <string name="give_a_score_to_this_restaurant">Donne une note à ce restaurant !!</string>
+    <string name="close">fermer</string>
+
+    <string name="feature_coming_soon">Cette fonctionalité arrive bientôt !!!</string>
+    <string name="lunch_not_choosen">Tu n\'as pas encore choisi ton restaurant pour déjeuner !</string>
+    <string name="has_not_decided">n\'a pas encore décidé !</string>
+    <string name="iamhungry">J\'ai faim !!!</string>
+    <string name="available_workmates">Mes collègues"</string>
+    <string name="map_view">Carte</string>
+    <string name="list_view">Liste</string>
+    <string name="workmates">Collègues</string>
+    <string name="your_lunch">MON DEJEUNER</string>
+    <string name="my_favorite_places">MES LIEUX FAVORIS</string>
+    <string name="settings">PARAMETRES</string>
+    <string name="logout">DECONNEXION</string>
+
+    <string name="distance">Distance</string>
+
+    <string name="is_eating_at">déjeune à</string>
+
+
+</resources>
