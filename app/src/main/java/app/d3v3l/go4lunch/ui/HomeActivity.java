@@ -87,8 +87,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 userManager.signOut(this).addOnSuccessListener(aVoid -> finish());
             }
             else if (idRessource== R.id.activity_home_drawer_favorite) {
-                Toast.makeText(getApplicationContext(), R.string.feature_coming_soon, Toast.LENGTH_SHORT).show();
-                //TODO create an activity with RecyclerVIEW
+                Intent intent = new Intent(this, FavoritePlacesActivity.class);
+                startActivity(intent);
             }
             else if (idRessource== R.id.activity_home_drawer_your_lunch) {
 

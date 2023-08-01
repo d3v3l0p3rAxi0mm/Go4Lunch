@@ -110,16 +110,32 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/star_btn"
+            android:id="@+id/like"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="#00FFFFFF"
-            android:drawableTop="@drawable/baseline_stars_24"
+            android:drawableTop="@drawable/baseline_thumb_up_24"
             android:drawableTint="@color/DarkPrimary"
             android:text="@string/like"
+            android:visibility="gone"
             android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/dislike"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#00FFFFFF"
+            android:drawableTop="@drawable/baseline_thumb_down_24"
+            android:drawableTint="@color/DarkPrimary"
+            android:text="@string/dislike"
+            android:textAlignment="center"
+            android:visibility="gone"
             android:textColor="@color/black"
             android:textStyle="bold" />
 

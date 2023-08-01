@@ -1,20 +1,10 @@
 package app.d3v3l.go4lunch.ui;
 
 import static android.content.ContentValues.TAG;
+import static android.view.View.GONE;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +12,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -42,13 +38,12 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
-import com.google.firestore.v1.StructuredQuery;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import app.d3v3l.go4lunch.BuildConfig;
 import app.d3v3l.go4lunch.R;
@@ -73,6 +68,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
 
     RatingBar ratingBar;
     RatingBar simpleRatingBar;
+
+    float finalScore = 0F;
 
     private boolean isUserHasJoined;
 
@@ -107,34 +104,65 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
 
         simpleRatingBar = b.ratingBar; // initiate a rating bar
 
-
         // Collect the score
-        DocumentReference docRef = db.collection("restaurants").document(placeId);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("restaurants").document(placeId).collection("likeUser")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int nbVote = 0;
+                            float score = 0F;
+
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document.getData().get("score").toString() != null) {
+                                    nbVote++;
+                                    score = score + Float.parseFloat(Objects.requireNonNull(document.getData().get("score")).toString());
+                                }
+                            }
+                            if (nbVote == 0) {
+                                finalScore = 0;
+                            } else {
+                                finalScore = score / nbVote;
+                            }
+                            simpleRatingBar.setRating((float) finalScore);
+                        }
+                    }
+                });
+
+        ratingBar = b.rating; // initiate a rating bar
+
+        // Collect the Fav Status
+        DocumentReference docFavRef = db.collection("restaurants").document(placeId).collection("likeUser").document(userManager.getCurrentUser().getUid());
+        docFavRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-
-                        float score = 0F;
-                        if (document.getData().get("score") != null) {
-                            score = Float.parseFloat(document.getData().get("score").toString());
+                        if (document.getData().get("place_in_favorite_for_user") != null) {
+                            if (Objects.requireNonNull(Objects.requireNonNull(document.getData()).get("place_in_favorite_for_user")).toString().equals("true")) {
+                                b.dislike.setVisibility(View.VISIBLE);
+                                b.like.setVisibility(GONE);
+                            } else {
+                                b.dislike.setVisibility(GONE);
+                                b.like.setVisibility(View.VISIBLE);
+                            }
+                        } else {
+                            b.dislike.setVisibility(GONE);
+                            b.like.setVisibility(View.VISIBLE);
                         }
-                        simpleRatingBar.setRating((float) score);
+
 
                     } else {
-                        Log.d(TAG, "No such document");
-
+                        b.dislike.setVisibility(GONE);
+                        b.like.setVisibility(View.VISIBLE);
                     }
                 } else {
                     Log.d(TAG, "get failed with ", task.getException());
                 }
             }
         });
-
-        ratingBar = b.rating; // initiate a rating bar
-        ratingBar.setRating((float) 2.5); // set default rating
 
         setRecyclerView();
 
@@ -180,199 +208,185 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
         b.submitScore.setOnClickListener(v -> {
 
             // collect rating Information about this restaurant
-            // if user joined another restaurant, we find its Id
-            DocumentReference docRef = db.collection("restaurants").document(placeId);
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
+            db.collection("restaurants").document(placeId).collection("likeUser")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                           @Override
+                           public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                               if (task.isSuccessful()) {
+                                   int nbVote = 0;
+                                   float score = 0F;
 
-                            //Calculate the new score
-                            int nbVote = 0;
-                            float score = 0F;
-                            if (document.getData().get("nbscore") != null) {
-                                nbVote = Integer.parseInt(document.getData().get("nbscore").toString());
-                            }
-                            if (document.getData().get("score") != null) {
-                                score = Float.parseFloat(document.getData().get("score").toString());
-                            }
-                            float totalPoints = score * nbVote;
-                            totalPoints += ratingBar.getRating();
-                            nbVote++;
-                            score = totalPoints/nbVote;
+                                   for (QueryDocumentSnapshot document : task.getResult()) {
+                                       if (document.getData().get("score").toString() != null) {
+                                           nbVote++;
+                                           score = score + Float.parseFloat(Objects.requireNonNull(document.getData().get("score")).toString());
+                                       }
+                                   }
+                                   if (nbVote == 0) {
+                                       finalScore = 0;
+                                   } else {
+                                       finalScore = score / nbVote;
+                                   }
 
-                            //Record new score
-                            Map<String, Object> place = new HashMap<>();
-                            place.put("uid", placeId);
-                            place.put("nbscore", nbVote);
-                            place.put("score", score);
+                               }
+                           }
+                    });
 
-                            float finalScore = score;
-                            db.collection("restaurants").document(placeId)
-                                    .set(place, SetOptions.merge())
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            simpleRatingBar.setRating((float) finalScore);
+                    //Record user Vote
+                    Map<String, Object> userToUpdate = new HashMap<>();
+                    userToUpdate.put("score", ratingBar.getRating());
 
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w(TAG, "Error writing document", e);
-                                        }
-                                    });
-
-                        } else {
-                            Log.d(TAG, "No such document");
-
-                        }
-                    } else {
-                        Log.d(TAG, "get failed with ", task.getException());
-                    }
-                }
-            });
-
-            b.notationLayout.setVisibility(View.GONE);
-        });
-
-        b.closeScoring.setOnClickListener(v -> b.notationLayout.setVisibility(View.GONE));
-
-        b.floatingOkBtn.setOnClickListener(v -> {
-
-            FirebaseUser user1 = userManager.getCurrentUser();
-
-            Log.d(TAG, user1.getUid());
-
-            // request to determine if user has already selected this restaurant
-            Query query1 = db.collection("restaurants").document(placeId).collection("usersOn" + stringDate).whereEqualTo("uid", user1.getUid());
-            AggregateQuery countQuery1 = query1.count();
-            countQuery1.get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<AggregateQuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        // Count fetched successfully
-                        AggregateQuerySnapshot snapshot = task.getResult();
-                        Log.d(TAG, "Count: " + snapshot.getCount());
-
-                        // User hasn't choose this restaurant
-                        if (snapshot.getCount()==0) {
-                            // Access a Firestore instance
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-                            // if user joined another restaurant, we find its Id
-                            DocumentReference docRef = db.collection("history").document(stringDate).collection("users").document(user1.getUid());
-                            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    db.collection("restaurants").document(placeId).collection("likeUser").document(userManager.getCurrentUser().getUid())
+                            .set(userToUpdate, SetOptions.merge())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        DocumentSnapshot document = task.getResult();
-                                        if (document.exists()) {
-                                            //delete user record for this restaurant
-                                            db.collection("restaurants").document(document.getData().get("placeId").toString()).collection("usersOn" + stringDate).document(user1.getUid())
-                                                    .delete()
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-
-                                                        }
-                                                    })
-                                                    .addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            Log.w(TAG, "Error deleting document", e);
-                                                        }
-                                                    });
-
-                                        } else {
-                                            Log.d(TAG, "No such document");
-
-                                        }
-                                    } else {
-                                        Log.d(TAG, "get failed with ", task.getException());
-                                    }
+                                public void onSuccess(Void aVoid) {
+                                    simpleRatingBar.setRating((float) finalScore);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error writing document", e);
                                 }
                             });
 
-                            // Add user in the restaurant joiners list
-                            Map<String, Object> users = new HashMap<>();
-                            users.put("uid", user1.getUid());
-                            users.put("username", user1.getDisplayName());
-                            users.put("urlPicture", user1.getPhotoUrl());
-
-                            db.collection("restaurants").document(placeId).collection("usersOn" + stringDate).document(user1.getUid())
-                                    .set(users)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            // add an entry in History collection
-                                            Map<String, Object> lunch = new HashMap<>();
-                                            lunch.put("placeId", placeId);
-                                            db.collection("history").document(stringDate).collection("users").document(user1.getUid())
-                                                    .set(lunch)
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            b.floatingOkBtn.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green, getTheme())));
-                                                        }
-                                                    })
-                                                    .addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            Log.w(TAG, "Error writing document", e);
-                                                            //TODO Remove document in usersOn{today} of the current Restaurant
-                                                        }
-                                                    });
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w(TAG, "Error writing document", e);
-                                        }
-                                    });
-
-
-
-                        // User has already choose this restaurant => delete datas
-                        } else {
-                            db.collection("restaurants").document(placeId).collection("usersOn" + stringDate).document(user1.getUid())
-                                    .delete()
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            db.collection("history").document(stringDate).collection("users").document(user1.getUid())
-                                                    .delete()
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            b.floatingOkBtn.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.grey, getTheme())));
-                                                        }
-                                                    })
-                                                    .addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            //TODO recreate user in collection usersOn{today} of current restaurant
-                                                        }
-                                                    });
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w(TAG, "Error deleting document", e);
-                                        }
-                                    });
-                        }
-                    } else {
-                        Log.d(TAG, "Count failed: ", task.getException());
-                    }
-                }
+                    b.notationLayout.setVisibility(GONE);
             });
-        });
+
+            b.closeScoring.setOnClickListener(v -> b.notationLayout.setVisibility(GONE));
+
+            b.floatingOkBtn.setOnClickListener(v -> {
+
+                FirebaseUser user1 = userManager.getCurrentUser();
+
+                // request to determine if user has already selected this restaurant
+                Query query1 = db.collection("restaurants").document(placeId).collection("usersOn" + stringDate).whereEqualTo("uid", user1.getUid());
+                AggregateQuery countQuery1 = query1.count();
+                countQuery1.get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AggregateQuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            // Count fetched successfully
+                            AggregateQuerySnapshot snapshot = task.getResult();
+                            Log.d(TAG, "Count: " + snapshot.getCount());
+
+                            // User hasn't choose this restaurant
+                            if (snapshot.getCount()==0) {
+                                // Access a Firestore instance
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                                // if user joined another restaurant, we find its Id
+                                DocumentReference docRef = db.collection("history").document(stringDate).collection("users").document(user1.getUid());
+                                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+                                                //delete user record for this restaurant
+                                                db.collection("restaurants").document(document.getData().get("placeId").toString()).collection("usersOn" + stringDate).document(user1.getUid())
+                                                        .delete()
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                Log.w(TAG, "Error deleting document", e);
+                                                            }
+                                                        });
+
+                                            } else {
+                                                Log.d(TAG, "No such document");
+
+                                            }
+                                        } else {
+                                            Log.d(TAG, "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+                                // Add user in the restaurant joiners list
+                                Map<String, Object> users = new HashMap<>();
+                                users.put("uid", user1.getUid());
+                                users.put("username", user1.getDisplayName());
+                                users.put("urlPicture", user1.getPhotoUrl());
+
+                                db.collection("restaurants").document(placeId).collection("usersOn" + stringDate).document(user1.getUid())
+                                        .set(users)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                // add an entry in History collection
+                                                Map<String, Object> lunch = new HashMap<>();
+                                                lunch.put("placeId", placeId);
+                                                db.collection("history").document(stringDate).collection("users").document(user1.getUid())
+                                                        .set(lunch)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                b.floatingOkBtn.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.green, getTheme())));
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                Log.w(TAG, "Error writing document", e);
+                                                                //TODO Remove document in usersOn{today} of the current Restaurant
+                                                            }
+                                                        });
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error writing document", e);
+                                            }
+                                        });
+
+
+
+                            // User has already choose this restaurant => delete datas
+                            } else {
+                                db.collection("restaurants").document(placeId).collection("usersOn" + stringDate).document(user1.getUid())
+                                        .delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                db.collection("history").document(stringDate).collection("users").document(user1.getUid())
+                                                        .delete()
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                b.floatingOkBtn.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.grey, getTheme())));
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                //TODO recreate user in collection usersOn{today} of current restaurant
+                                                            }
+                                                        });
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error deleting document", e);
+                                            }
+                                        });
+                            }
+                        } else {
+                            Log.d(TAG, "Count failed: ", task.getException());
+                        }
+                    }
+                });
+            });
 
     }
 
@@ -431,16 +445,68 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
                     Toast.makeText(getApplicationContext(), "Call to" + place.getInternationalPhoneNumber(), Toast.LENGTH_SHORT).show();
                 }
             });
-            b.starBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), R.string.feature_coming_soon, Toast.LENGTH_SHORT).show();
-                }
-            });
         } else {
             b.callBtn.setTextColor(getColor(R.color.grey));
             b.callBtn.setCompoundDrawableTintList(ColorStateList.valueOf(getResources().getColor(R.color.grey, getTheme())));
         }
+
+        b.like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                //Record new score
+                Map<String, Object> user = new HashMap<>();
+                user.put("place_in_favorite_for_user", "true");
+
+                db.collection("restaurants").document(placeId).collection("likeUser").document(userManager.getCurrentUser().getUid())
+                        .set(user, SetOptions.merge())
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                b.like.setVisibility(View.GONE);
+                                b.dislike.setVisibility(View.VISIBLE);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error writing document", e);
+                            }
+                        });
+
+            }
+        });
+
+        b.dislike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Record new score
+                Map<String, Object> user = new HashMap<>();
+                user.put("place_in_favorite_for_user", "false");
+
+                db.collection("restaurants").document(placeId).collection("likeUser").document(userManager.getCurrentUser().getUid())
+                        .set(user, SetOptions.merge())
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                b.like.setVisibility(View.VISIBLE);
+                                b.dislike.setVisibility(View.GONE);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error writing document", e);
+                            }
+                        });
+
+
+
+
+            }
+        });
 
         if (place.getWebsite() != null) {
             b.webBtn.setOnClickListener(new View.OnClickListener() {
@@ -465,4 +531,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements Plac
     public void onDetailsFailure() {
 
     }
+
+
 }

@@ -180,42 +180,6 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
         });
     }
 
-
-    /*public void onSearchCalled() {
-        // Set the fields to specify which types of place data to return.
-        List<Place.Field> fields = Arrays.asList(Place.Field.ID);
-        // Start the autocomplete intent.
-        ArrayList<String> typeOfSearch = new ArrayList<String>();
-        typeOfSearch.add("restaurant");
-        Intent intent = new Autocomplete.IntentBuilder(
-                AutocompleteActivityMode.OVERLAY, fields)
-                .setTypesFilter(typeOfSearch)
-                .setLocationBias(getBoundsFromLatLng(myLocation, 50000))
-                .build(getActivity());
-        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                Place place = Autocomplete.getPlaceFromIntent(data);
-                Intent intent = new Intent(getActivity(), RestaurantDetailsActivity.class);
-                intent.putExtra("PLACEID", place.getId());
-                startActivity(intent);
-
-            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                // TODO: Handle the error.
-                Status status = Autocomplete.getStatusFromIntent(data);
-                Log.i(TAG, status.getStatusMessage());
-            } else if (resultCode == RESULT_CANCELED) {
-                // The user canceled the operation.
-            }
-        }
-    }*/
-
-
-
     private void SearchMyPositionThenPlacesNearby() {
         @SuppressLint("MissingPermission")
         Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
@@ -252,8 +216,13 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
             place.put("address", result.getVicinity());
             place.put("latitude", result.getGeometry().getLocation().getLat());
             place.put("longitude", result.getGeometry().getLocation().getLng());
+            if (result.getPhotos() != null) {
+                place.put("photo", result.getPhotos().get(0).getPhotoReference());
+            } else {
+                place.put("photo", "default");
+            }
 
-            Photo p = new Photo();
+            String p = "default";
             this.mRestaurants.add(new Restaurant(result.getPlaceId(), result.getName(), result.getVicinity(), result.getGeometry().getLocation().getLat(),result.getGeometry().getLocation().getLng(),result.getDistanceFromUser(),p));
 
             Double distance = SphericalUtil.computeDistanceBetween(myLocation,new LatLng(result.getGeometry().getLocation().getLat(),result.getGeometry().getLocation().getLng()));
@@ -294,21 +263,6 @@ public class MapViewFragment extends Fragment implements PlaceCalls.Callbacks {
 
         }
         googleMapGlobal.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(myLocation,10,0f,0f)));
-
-        // adding on click listener to marker of google maps.
-        /*googleMapGlobal.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-
-
-
-                // on marker click we are getting the title of our marker
-                // which is clicked and displaying it in a toast message.
-                //String markerName = marker.getTitle();
-                //Toast.makeText(getActivity(), "Clicked location is " + markerName, Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });*/
 
         googleMapGlobal.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override

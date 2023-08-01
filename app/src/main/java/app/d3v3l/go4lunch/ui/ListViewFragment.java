@@ -1,15 +1,17 @@
 package app.d3v3l.go4lunch.ui;
 
-import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
-import static app.d3v3l.go4lunch.Utils.LocationUtils.getBoundsFromLatLng;
-
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,47 +23,21 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.bumptech.glide.Glide;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.maps.android.SphericalUtil;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 import app.d3v3l.go4lunch.R;
 import app.d3v3l.go4lunch.Utils.PlaceCalls;
 import app.d3v3l.go4lunch.databinding.FragmentListViewBinding;
-import app.d3v3l.go4lunch.databinding.FragmentMapViewBinding;
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Container;
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Photo;
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Result;
@@ -228,11 +204,11 @@ public class ListViewFragment extends Fragment implements PlaceCalls.Callbacks {
 
 
             List<Photo> photos = result.getPhotos();
-            Photo photo;
+            String photo;
             if (photos == null) {
-                photo = null;
+                photo = "default";
             } else {
-                photo = result.getPhotos().get(0);
+                photo = result.getPhotos().get(0).getPhotoReference();
             }
 
             Restaurant savedResultInList = new Restaurant(result.getPlaceId(), result.getName(), result.getVicinity(), result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng(), distanceSimplified, photo);

@@ -52,6 +52,8 @@
 
     <string name="is_eating_at">déjeune à</string>
     <string name="typename">Taper un nom, ville ou adresse</string>
+    <string name="myFavoritePlaces">Mes lieux favoris</string>
+    <string name="dislike">dislike</string>
 
 
 </resources>

@@ -1,6 +1,9 @@
 
 package app.d3v3l.go4lunch.model;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.SphericalUtil;
+
 import app.d3v3l.go4lunch.model.GoogleApiPlaces.placesNearBySearch.Photo;
 
 public class Restaurant {
@@ -11,10 +14,11 @@ public class Restaurant {
     private Double latitude;
     private Double longitude;
     private String distanceFromUser;
-    private Photo photo;
+    //private Photo photo;
+    private String photoReference;
 
 
-    public Restaurant(String placeId, String name, String address, Double latitude, Double longitude, String distanceFromUser, Photo photo) {
+/*    public Restaurant(String placeId, String name, String address, Double latitude, Double longitude, String distanceFromUser, Photo photo) {
         this.placeId = placeId;
         this.name = name;
         this.address = address;
@@ -22,6 +26,16 @@ public class Restaurant {
         this.longitude = longitude;
         this.distanceFromUser = distanceFromUser;
         this.photo = photo;
+    }*/
+
+    public Restaurant(String placeId, String name, String address, Double latitude, Double longitude, String distanceFromUser, String photoReference) {
+        this.placeId = placeId;
+        this.name = name;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.distanceFromUser = distanceFromUser;
+        this.photoReference = photoReference;
     }
 
     public String getPlaceId() {
@@ -72,11 +86,19 @@ public class Restaurant {
         this.distanceFromUser = distanceFromUser;
     }
 
-    public Photo getPhoto() {
+/*    public Photo getPhoto() {
         return photo;
     }
 
     public void setPhoto(Photo photo) {
         this.photo = photo;
+    }*/
+
+    public String getPhotoReference() {
+        return photoReference;
+    }
+
+    public void setPhotoReference(String photoReference) {
+        this.photoReference = photoReference;
     }
 }

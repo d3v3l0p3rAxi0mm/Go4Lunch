@@ -52,6 +52,8 @@
 
     <string name="is_eating_at">is eating at</string>
     <string name="typename">Type a name, city or address</string>
+    <string name="myFavoritePlaces">My favorite places</string>
+    <string name="dislike">dislike</string>
 
 
 </resources>

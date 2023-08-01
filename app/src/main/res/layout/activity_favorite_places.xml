@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/activity_favorite_place_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:paddingEnd="4dp"
+    android:paddingTop="0dp"
+    app:title="@string/myFavoritePlaces"
+    android:paddingBottom="4dp"
+    android:background="@color/Primary"
+    app:titleTextColor="@color/white"
+    app:theme="@style/Theme.Go4Lunch" />
+
+<androidx.recyclerview.widget.RecyclerView
+
+    android:id="@+id/list_restaurants"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.HomeActivity"
+    tools:listitem="@layout/item_restaurant" />
+
+</LinearLayout>
